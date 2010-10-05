@@ -88,9 +88,9 @@ function steeef_precmd {
     # check for untracked files or updated submodules, since vcs_info doesn't
     if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
         PR_GIT_UPDATE=1
-        FMT_BRANCH="(%{$fg[magenta]%}%b%u%c%{$fg[red]%}●${PR_RST})"
+        FMT_BRANCH="(%{$turquoise%}%b%u%c%{$hotpink%}●${PR_RST})"
     else
-        FMT_BRANCH="(%{$fg[magenta]%}%b%u%c${PR_RST})"
+        FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
     fi
     zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 

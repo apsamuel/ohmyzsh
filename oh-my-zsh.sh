@@ -211,6 +211,10 @@ for config_file ("$ZSH_CUSTOM"/*.zsh(N)); do
 done
 unset config_file
 
+# Load and run compinit
+autoload -U compinit
+compinit -i
+
 # Load the theme
 is_theme() {
   local base_dir=$1

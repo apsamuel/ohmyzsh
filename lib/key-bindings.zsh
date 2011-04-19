@@ -125,6 +125,10 @@ bindkey '\C-x\C-e' edit-command-line
 # file rename magick
 bindkey "^[m" copy-prev-shell-word
 
+# Make the delete key (or Fn + Delete on the Mac) work instead of outputting a ~
+bindkey "^[[3~" delete-char
+bindkey "^[3;5~" delete-char
+
 # consider emacs keybindings:
 
 #bindkey -e  ## emacs key bindings

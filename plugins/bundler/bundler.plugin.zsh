@@ -11,6 +11,7 @@ alias bout="bundle outdated"
 alias bp="bundle package"
 alias bu="bundle update"
 alias bp="bundle package"
+alias bu="bundle update"
 
 ## Gem wrapper
 

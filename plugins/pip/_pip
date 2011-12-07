@@ -12,6 +12,10 @@ _pip_all() {
   fi
 }
 
+_pip_all() {
+  all_pkgs=(`pip search * | cut -d ' ' -f 1 | tr '[A-Z]' '[a-z]'`)
+}
+
 _pip_installed() {
   installed_pkgs=($($service freeze | cut -d '=' -f 1))
 }

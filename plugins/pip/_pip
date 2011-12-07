@@ -13,7 +13,10 @@ _pip_all() {
 }
 
 _pip_all() {
-  all_pkgs=(`pip search * | cut -d ' ' -f 1 | tr '[A-Z]' '[a-z]'`)
+  # we cache the list of packages (originally from the macports plugin)
+  if (( ! $+piplist )); then
+	piplist=($(pip search * | cut -d ' ' -f 1 | tr '[A-Z]' '[a-z]'))
+  fi
 }
 
 _pip_installed() {

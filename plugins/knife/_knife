@@ -225,6 +225,10 @@ _chef_environments_remote() {
   (knife environment list | awk '{print $1}')
 }
 
+_chef_environments_remote() {
+  (knife environment list | awk '{print $1}')
+}
+
 # The chef_x_local functions use the knife config to find the paths of relevant objects x to be uploaded to the server
 _chef_cookbooks_local() {
   if [ $KNIFE_RELATIVE_PATH ]; then

@@ -44,6 +44,12 @@ alias a:='cat >>'
 
 # XARGS
 
+alias c='cat'
+alias w='cat >'
+alias a='cat >>'
+
+# XARGS
+
 alias x='xargs'
 
 alias xy='xargs "$GREP" -Ri'
@@ -68,6 +74,12 @@ alias xu='xargs "$CURL"'
 
 alias xw:='xargs cat >'
 alias xa:='xargs >>'
+
+# SUDO
+
+alias xc='xargs cat'
+alias xw='xargs cat >'
+alias xa='xargs cat >>'
 
 # SUDO
 

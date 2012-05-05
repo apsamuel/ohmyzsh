@@ -54,14 +54,19 @@ alias a:='cat >>'
 
 # XARGS
 
-alias c='cat'
-alias w='cat >'
-alias a='cat >>'
+alias w='echo >'
+alias a='echo >>'
 
+alias c='cat'
 alias p='"$PAGER"'
 
 alias d='"$WGET"'
 alias u='"$CURL"'
+
+# enhanced writeing
+
+alias w:='cat >'
+alias a:='cat >>'
 
 # XARGS
 
@@ -92,14 +97,17 @@ alias xa:='xargs >>'
 
 # SUDO
 
-alias xc='xargs cat'
-alias xw='xargs cat >'
-alias xa='xargs cat >>'
+alias xw='xargs echo >'
+alias xa='xargs echo >>'
 
+alias xc='xargs cat'
 alias xp='xargs "$PAGER"'
 
 alias xd='xargs "$WGET"'
 alias xu='xargs "$CURL"'
+
+alias xw:='xargs cat >'
+alias xa:='xargs >>'
 
 # SUDO
 
@@ -148,6 +156,7 @@ alias sxp='"$ROOT" xargs "$PAGER"'
 
 alias sxm='"$ROOT" xargs man'
 
+alias sxc='"$ROOT" xargs cat'
 alias sxp='"$ROOT" xargs "$PAGER"'
 
 alias sxd='"$ROOT" xargs "$WGET"'

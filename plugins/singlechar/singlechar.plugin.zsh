@@ -58,6 +58,8 @@ alias c='cat'
 alias w='cat >'
 alias a='cat >>'
 
+alias p='"$PAGER"'
+
 alias d='"$WGET"'
 alias u='"$CURL"'
 
@@ -93,6 +95,8 @@ alias xa:='xargs >>'
 alias xc='xargs cat'
 alias xw='xargs cat >'
 alias xa='xargs cat >>'
+
+alias xp='xargs "$PAGER"'
 
 alias xd='xargs "$WGET"'
 alias xu='xargs "$CURL"'
@@ -143,6 +147,8 @@ alias sxc='"$ROOT" xargs cat'
 alias sxp='"$ROOT" xargs "$PAGER"'
 
 alias sxm='"$ROOT" xargs man'
+
+alias sxp='"$ROOT" xargs "$PAGER"'
 
 alias sxd='"$ROOT" xargs "$WGET"'
 alias sxu='"$ROOT" xargs "$CURL"'

@@ -58,6 +58,9 @@ alias c='cat'
 alias w='cat >'
 alias a='cat >>'
 
+alias d='"$WGET"'
+alias u='"$CURL"'
+
 # XARGS
 
 alias x='xargs'
@@ -90,6 +93,9 @@ alias xa:='xargs >>'
 alias xc='xargs cat'
 alias xw='xargs cat >'
 alias xa='xargs cat >>'
+
+alias xd='xargs "$WGET"'
+alias xu='xargs "$CURL"'
 
 # SUDO
 

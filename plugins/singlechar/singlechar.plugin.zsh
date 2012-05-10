@@ -54,6 +54,12 @@ alias a:='cat >>'
 
 # XARGS
 
+alias f.='find .'
+alias f:='find'
+
+alias f='"$GREP" -li'
+alias fn='"$GREP" -lvi'
+
 alias w='echo >'
 alias a='echo >>'
 
@@ -63,7 +69,7 @@ alias p='"$PAGER"'
 alias d='"$WGET"'
 alias u='"$CURL"'
 
-# enhanced writeing
+# enhanced writing
 
 alias w:='cat >'
 alias a:='cat >>'
@@ -97,6 +103,12 @@ alias xa:='xargs >>'
 
 # SUDO
 
+alias xf.='xargs find .'
+alias xf:='xargs find'
+
+alias xf='xargs "$GREP" -li'
+alias xfn='xargs "$GREP" -lvi'
+
 alias xw='xargs echo >'
 alias xa='xargs echo >>'
 
@@ -122,6 +134,12 @@ alias sf:='"$ROOT" find'
 alias sf='"$ROOT" "$GREP" -Rli'
 alias sfn='"$ROOT" "$GREP" -Rlvi'
 
+alias xf.='"$ROOT" find .'
+alias xf:='"$ROOT" find'
+
+alias xf='"$ROOT" "$GREP" -li'
+alias xfn='"$ROOT" "$GREP" -lvi'
+
 alias sw='"$ROOT" echo >'
 alias sa='"$ROOT" echo >>'
 
@@ -143,6 +161,12 @@ alias sxy='"$ROOT" xargs "$GREP" -Ri'
 alias sxn='"$ROOT" xargs "$GREP" -Riv'
 
 alias sxf.='"$ROOT" xargs find | "$GREP"'
+alias sxf:='"$ROOT" xargs find'
+
+alias sxf='"$ROOT" xargs "$GREP" -li'
+alias sxfn='"$ROOT" xargs "$GREP" -lvi'
+
+alias sxf.='"$ROOT" xargs find .'
 alias sxf:='"$ROOT" xargs find'
 
 alias sxf='"$ROOT" xargs "$GREP" -li'

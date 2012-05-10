@@ -66,6 +66,8 @@ alias a='echo >>'
 alias c='cat'
 alias p='"$PAGER"'
 
+alias m='man'
+
 alias d='"$WGET"'
 alias u='"$CURL"'
 
@@ -115,6 +117,8 @@ alias xa='xargs echo >>'
 alias xc='xargs cat'
 alias xp='xargs "$PAGER"'
 
+alias xm='xargs man'
+
 alias xd='xargs "$WGET"'
 alias xu='xargs "$CURL"'
 
@@ -134,11 +138,11 @@ alias sf:='"$ROOT" find'
 alias sf='"$ROOT" "$GREP" -Rli'
 alias sfn='"$ROOT" "$GREP" -Rlvi'
 
-alias xf.='"$ROOT" find .'
-alias xf:='"$ROOT" find'
+alias sf.='"$ROOT" find .'
+alias sf:='"$ROOT" find'
 
-alias xf='"$ROOT" "$GREP" -li'
-alias xfn='"$ROOT" "$GREP" -lvi'
+alias sf='"$ROOT" "$GREP" -li'
+alias sfn='"$ROOT" "$GREP" -lvi'
 
 alias sw='"$ROOT" echo >'
 alias sa='"$ROOT" echo >>'

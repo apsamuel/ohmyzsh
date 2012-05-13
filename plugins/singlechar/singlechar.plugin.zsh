@@ -57,8 +57,8 @@ alias a:='cat >>'
 alias f.='find . | "$GREP"'
 alias f:='find'
 
-alias f='"$GREP" -li'
-alias fn='"$GREP" -lvi'
+alias f='"$GREP" -Rli'
+alias fn='"$GREP" -Rlvi'
 
 alias w='echo >'
 alias a='echo >>'
@@ -108,8 +108,8 @@ alias xa:='xargs >>'
 alias xf.='xargs find . | "$GREP"'
 alias xf:='xargs find'
 
-alias xf='xargs "$GREP" -li'
-alias xfn='xargs "$GREP" -lvi'
+alias xf='xargs "$GREP" -Rli'
+alias xfn='xargs "$GREP" -Rlvi'
 
 alias xw='xargs echo >'
 alias xa='xargs echo >>'
@@ -141,8 +141,8 @@ alias sfn='"$ROOT" "$GREP" -Rlvi'
 alias sf.='"$ROOT" find . | "$GREP"'
 alias sf:='"$ROOT" find'
 
-alias sf='"$ROOT" "$GREP" -li'
-alias sfn='"$ROOT" "$GREP" -lvi'
+alias sf='"$ROOT" "$GREP" -Rli'
+alias sfn='"$ROOT" "$GREP" -Rlvi'
 
 alias sw='"$ROOT" echo >'
 alias sa='"$ROOT" echo >>'

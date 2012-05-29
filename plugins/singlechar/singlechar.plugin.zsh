@@ -54,7 +54,7 @@ alias a:='cat >>'
 
 # XARGS
 
-alias f.='find .'
+alias f.='find . | "$GREP"'
 alias f:='find'
 
 alias f='"$GREP" -li'
@@ -105,7 +105,7 @@ alias xa:='xargs >>'
 
 # SUDO
 
-alias xf.='xargs find .'
+alias xf.='xargs find . | "$GREP"'
 alias xf:='xargs find'
 
 alias xf='xargs "$GREP" -li'
@@ -138,7 +138,7 @@ alias sf:='"$ROOT" find'
 alias sf='"$ROOT" "$GREP" -Rli'
 alias sfn='"$ROOT" "$GREP" -Rlvi'
 
-alias sf.='"$ROOT" find .'
+alias sf.='"$ROOT" find . | "$GREP"'
 alias sf:='"$ROOT" find'
 
 alias sf='"$ROOT" "$GREP" -li'
@@ -170,7 +170,7 @@ alias sxf:='"$ROOT" xargs find'
 alias sxf='"$ROOT" xargs "$GREP" -li'
 alias sxfn='"$ROOT" xargs "$GREP" -lvi'
 
-alias sxf.='"$ROOT" xargs find .'
+alias sxf.='"$ROOT" xargs find . | "$GREP"'
 alias sxf:='"$ROOT" xargs find'
 
 alias sxf='"$ROOT" xargs "$GREP" -li'

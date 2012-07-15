@@ -1,3 +1,4 @@
+autoload -U colors && colors
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
 

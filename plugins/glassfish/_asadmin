@@ -1047,6 +1047,10 @@ _asadmin_configs() {
     compadd $(command asadmin list-configs --terse)
 }
 
+_asadmin_configs() {
+    compadd $(command asadmin list-configs --terse)
+}
+
 _asadmin_instances() {
     compadd $(command asadmin list-instances --terse --nostatus domain)
 }

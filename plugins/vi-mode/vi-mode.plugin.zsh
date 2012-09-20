@@ -95,6 +95,8 @@ function zle-line-finish() {
 zle -N zle-line-finish
 
 bindkey -v
+for bind in ${(@f)binds}; do eval $bind; done
+unset binds
 
 # allow vv to edit the command line (standard behaviour)
 autoload -Uz edit-command-line

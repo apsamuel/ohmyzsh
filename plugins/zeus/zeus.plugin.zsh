@@ -38,6 +38,9 @@ alias zwip='zeus cucumber --profile wip'
 # Rspec
 alias zspec='zeus rspec'
 
+# Rspec
+alias zspec='zeus rspec'
+
 # Test
 alias zt='zeus test'
 alias zest='zeus test'

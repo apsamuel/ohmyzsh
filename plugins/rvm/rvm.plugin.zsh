@@ -39,6 +39,17 @@ done
 unset rubies v version
 
 
+function rb20 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby"
+	else
+		rvm use "$ruby20@$1"
+	fi
+}
+
+_rb20() {compadd `ls -1 $rvm_path/gems | grep "^$ruby20@" | sed -e "s/^$ruby20@//" | awk '{print $1}'`}
+compdef _rb20 rb20
+
 function rvm-update {
   rvm get head
 }

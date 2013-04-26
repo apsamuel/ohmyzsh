@@ -41,7 +41,7 @@ unset rubies v version
 
 function rb20 {
 	if [ -z "$1" ]; then
-		rvm use "$ruby"
+		rvm use "$ruby20"
 	else
 		rvm use "$ruby20@$1"
 	fi

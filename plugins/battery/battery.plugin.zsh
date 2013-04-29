@@ -84,6 +84,8 @@ elif [[ "$OSTYPE" = freebsd* ]]; then
       battery_pct
     else
       echo "External Power"
+    else
+      battery_pct
     fi
   }
   function battery_time_remaining() {

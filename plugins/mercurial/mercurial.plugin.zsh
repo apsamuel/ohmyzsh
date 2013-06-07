@@ -15,6 +15,7 @@ alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {au
 alias hgun='hg resolve --list'
 # pull and update
 alias hgi='hg incoming'
+alias hgic='hg incoming | grep "changeset" | wc -l'
 alias hgl='hg pull -u'
 alias hglr='hg pull --rebase'
 alias hgo='hg outgoing'

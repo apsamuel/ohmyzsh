@@ -15,7 +15,6 @@ alias hgsl='hg log --limit 20 --template "{node|short} | {date|isodatesec} | {au
 alias hgun='hg resolve --list'
 # pull and update
 alias hgi='hg incoming'
-alias hgic='hg incoming | grep "changeset" | wc -l'
 alias hgl='hg pull -u'
 alias hglr='hg pull --rebase'
 alias hgo='hg outgoing'
@@ -148,4 +147,12 @@ function hg_dirty_choose {
 
 function hg_dirty {
   hg_dirty_choose $ZSH_THEME_HG_PROMPT_DIRTY $ZSH_THEME_HG_PROMPT_CLEAN
+}
+
+function hgic() {
+    hg incoming "$@" | grep "changeset" | wc -l
+}
+
+function hgoc() {
+    hg outgoing "$@" | grep "changeset" | wc -l
 }

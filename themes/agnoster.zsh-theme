@@ -357,6 +357,14 @@ prompt_virtualenv() {
   fi
 }
 
+# Virtualenv: current working virtualenv
+prompt_virtualenv() {
+  local virtualenv_path="$VIRTUAL_ENV"
+  if [[ -n $virtualenv_path ]]; then
+    prompt_segment blue black "(`basename $virtualenv_path`)"
+  fi
+}
+
 # Status:
 # - was there an error
 # - am I root

@@ -2433,6 +2433,14 @@ __git_complete_config_variable_value ()
 		__gitcomp_nl "$(__git_remotes)" "" "$cur_"
 		return
 		;;
+	branch.*.rebase)
+		__gitcomp "false true"
+		return
+		;;
+	remote.pushdefault)
+		__gitcomp_nl "$(__git_remotes)"
+		return
+		;;
 	remote.*.fetch)
 		local remote="${varname#remote.}"
 		remote="${remote%.fetch}"
@@ -2472,6 +2480,10 @@ __git_complete_config_variable_value ()
 		;;
 	diff.submodule)
 		__gitcomp "$__git_diff_submodule_formats" "" "$cur_"
+		return
+		;;
+	diff.submodule)
+		__gitcomp "log short"
 		return
 		;;
 	help.format)

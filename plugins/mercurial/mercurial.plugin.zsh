@@ -235,8 +235,20 @@ function hg_dirty {
     return
   fi
 
+  # Check if there are modifications
+  local hg_status
+  if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" = true ]]; then
+    if ! hg_status="$(hg status -q 2>/dev/null)"; then
+      return
+    fi
+  else
+    if ! hg_status="$(hg status 2>/dev/null)"; then
+      return
+    fi
+  fi
+
   # grep exits with 0 when dirty
-  if command grep -Eq '^\s*[ACDIM!?L]' <<< "$hg_status"; then
+  if command grep -Eq '^\s*[ACDIMR!?L].*$' <<< "$hg_status"; then
     echo $ZSH_THEME_HG_PROMPT_DIRTY
     return
   fi

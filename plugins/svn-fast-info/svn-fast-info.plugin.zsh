@@ -30,6 +30,7 @@ function svn_prompt_info() {
   fi
 }
 
+
 function svn_repo_need_upgrade() {
   command grep -q "E155036" <<< "${1:-$(LANG= svn info 2>/dev/null)}" && \
     echo "E155036: upgrade repo with svn upgrade"

@@ -11,6 +11,7 @@ alias bp="bundle package"
 alias bu="bundle update"
 alias bp="bundle package"
 alias bu="bundle update"
+alias bi="bundle_install"
 
 ## Gem wrapper
 

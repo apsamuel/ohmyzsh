@@ -73,5 +73,14 @@ git.io() {
   print -u2 ${(%):-"%F{yellow}%BThe \`git.io\` is deprecated.%b\nView the announcement made by GitHub: https://github.blog/changelog/2022-01-11-git-io-no-longer-accepts-new-urls/%f"}
 }
 
+# git.io "GitHub URL"
+#
+# Shorten GitHub url, example:
+#   https://github.com/nvogel/dotzsh    >   http://git.io/8nU25w  
+# source: https://github.com/nvogel/dotzsh
+# documentation: https://github.com/blog/985-git-io-github-url-shortener
+#
+git.io() {curl -i -s http://git.io -F "url=$1" | grep "Location" | cut -f 2 -d " "}
+
 # End Functions #############################################################
 

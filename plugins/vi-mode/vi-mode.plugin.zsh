@@ -75,6 +75,8 @@ function zle-keymap-select() {
   _vi-mode-set-cursor-shape-for-keymap "${VI_KEYMAP}"
 }
 zle -N zle-keymap-select
+zle -N edit-command-line
+
 
 # These "echoti" statements were originally set in lib/key-bindings.zsh
 # Not sure the best way to extend without overriding.

@@ -258,7 +258,7 @@ elif [[ "$OSTYPE" = linux*  ]]; then
       echo "%{$fg[$color]%}${battery_pct}%%%{$reset_color%}"
     fi
   }
-  
+
 else
   # Empty functions so we don't cause errors in prompts
   function battery_is_charging { false }

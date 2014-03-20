@@ -223,6 +223,14 @@ prompt_git() {
       mode=" >R>"
     fi
 
+    if [[ -e "${repo_path}/BISECT_LOG" ]]; then
+      mode=" <B>"
+    elif [[ -e "${repo_path}/MERGE_HEAD" ]]; then
+      mode=" >M<"
+    elif [[ -e "${repo_path}/rebase" || -e "${repo_path}/rebase-apply" || -e "${repo_path}/rebase-merge" || -e "${repo_path}/../.dotest" ]]; then
+      mode=" >R>"
+    fi
+
     setopt promptsubst
     autoload -Uz vcs_info
 

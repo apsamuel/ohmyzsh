@@ -19,7 +19,7 @@ The plugin uses one of these tools to process JSON data, in the following order:
 Any of these must be in `$PATH` before the plugin is loaded, otherwise the plugin exits
 prematurely and the functions will not be available.
 
-## Usage
+## Examples
 
 Usage is simple... just take your json data and pipe it into the appropriate jsontool:
 

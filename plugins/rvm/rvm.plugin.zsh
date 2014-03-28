@@ -50,6 +50,17 @@ function rb20 {
 _rb20() {compadd `ls -1 $rvm_path/gems | grep "^$ruby20@" | sed -e "s/^$ruby20@//" | awk '{print $1}'`}
 compdef _rb20 rb20
 
+function rb21 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby21"
+	else
+		rvm use "$ruby21@$1"
+	fi
+}
+
+_rb21() {compadd `ls -1 $rvm_path/gems | grep "^$ruby21@" | sed -e "s/^$ruby21@//" | awk '{print $1}'`}
+compdef _rb21 rb21
+
 function rvm-update {
   rvm get head
 }

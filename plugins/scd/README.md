@@ -74,6 +74,10 @@ PAT$</dt><dd>
 -p, --push</dt><dd>
   use "pushd" to change to the target directory.</dd><dt>
 
+-A, --all</dt><dd>
+  include all matching directories.  Disregard matching by directory
+  alias and filtering of less likely paths.</dd><dt>
+
 --list</dt><dd>
   show matching directories and exit.</dd><dt>
 

@@ -336,6 +336,13 @@ __git_sequencer_status ()
 	return 1
 }
 
+eread ()
+{
+	f="$1"
+	shift
+	test -r "$f" && read "$@" <"$f"
+}
+
 # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
 # when called from PS1 using command substitution
 # in this mode it prints text to add to bash PS1 prompt (includes branch name)

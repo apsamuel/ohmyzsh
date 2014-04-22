@@ -72,7 +72,7 @@
 # easier to emulate it in Zsh. Every time a new __gitcomp* function is added,
 # the corresponding function should be added to Zsh.
 
-__gitcompadd ()
+__gitcompappend ()
 {
 	local x i=${#COMPREPLY[@]}
 	for x in $1; do
@@ -94,6 +94,14 @@ __gitcomp ()
 	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
 }
 
+# Variation of __gitcomp_nl () that appends to the existing list of
+# completion candidates, COMPREPLY.
+__gitcomp_nl_append ()
+{
+	local IFS=$'\n'
+	__gitcompappend "$1" "${2-}" "${3-$cur}" "${4- }"
+}
+
 # Generates completion reply from newline-separated possible completion words
 # by appending a space to all of them. The result is appended to COMPREPLY.
 # It accepts 1 to 4 arguments:
@@ -105,8 +113,8 @@ __gitcomp ()
 #    appended.
 __gitcomp_nl ()
 {
-	local IFS=$'\n'
-	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
+	COMPREPLY=()
+	__gitcomp_nl_append "$@"
 }
 
 # Appends prefiltered words to COMPREPLY without any additional processing.

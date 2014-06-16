@@ -70,6 +70,10 @@ _within-bundled-project() {
   return 1
 }
 
+_binstubbed() {
+  [ -f "./bin/${1}" ]
+}
+
 _run-with-bundler() {
   if (( ! $+commands[bundle] )) || ! _within-bundled-project; then
     "$@"

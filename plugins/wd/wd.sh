@@ -234,6 +234,7 @@ wd_addcd() {
     cd "$currentdir" || return
 }
 
+## functions
 
 wd_remove()
 {

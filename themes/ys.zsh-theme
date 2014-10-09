@@ -79,7 +79,7 @@ ${venv_info}\
 [%*] $exit_code
 %{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
 
-if [[ "$(whoami)" == "root" ]]; then
+if [[ "$USER" == "root" ]]; then
 PROMPT="
 %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
 %{$bg[yellow]%}%{$fg[cyan]%}%n%{$reset_color%} \

@@ -188,6 +188,11 @@ _git-effort() {
 }
 
 
+_git-effort() {
+    _arguments \
+        '--above[ignore file with less than x commits]'
+}
+
 _git-extras() {
     local curcontext=$curcontext state line ret=1
     declare -A opt_args

@@ -36,3 +36,6 @@ if (( $+commands[ack-grep] )); then
 elif (( $+commands[ack] )); then
   alias afind='ack -il'
 fi
+
+# recognize comments
+setopt interactivecomments

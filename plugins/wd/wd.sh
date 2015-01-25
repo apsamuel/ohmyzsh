@@ -410,6 +410,18 @@ wd_path()
     echo "$(echo "$dir" | sed "s:~:${HOME}:g")"
 }
 
+wd_ls()
+{
+    wd_getdir $1
+    ls $dir
+}
+
+wd_path()
+{
+    wd_getdir $1
+    echo $(echo $dir | sed "s:${HOME}:~:g")
+}
+
 wd_show()
 {
     local name_arg=$1

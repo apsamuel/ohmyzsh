@@ -77,6 +77,7 @@ is optimized for DuckDuckGo, as Google redirects to an intermediate page. The FR
 environment variable triggers the use of DuckDuckGo's lucky search, rendering the FRONTEND_SEARCH_FALLBACK
 setting unnecessary in this context.
 
+
 ## Author
 
 **Wilson Mendes (willmendesneto)**

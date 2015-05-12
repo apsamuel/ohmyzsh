@@ -85,6 +85,9 @@ is_plugin() {
     || builtin test -f $base_dir/plugins/$name/_$name
 }
 
+# Load all stock functions (from $fpath files) called below.
+autoload -U compaudit compinit
+
 # Set ZSH_CUSTOM to the path where your custom config files
 # and plugins exists, or else we will use the default custom/
 if [[ -z "$ZSH_CUSTOM" ]]; then

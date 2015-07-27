@@ -18,6 +18,15 @@ else
   RPROMPT="${RPROMPT} ${__RPROMPT}"
 fi
 
+function _current_dir() {
+  local _max_pwd_length="65"
+  if [[ $(echo -n $PWD | wc -c) -gt ${_max_pwd_length} ]]; then
+    echo "%{$fg_bold[blue]%}%-2~ ... %3~%{$reset_color%} "
+  else
+    echo "%{$fg_bold[blue]%}%~%{$reset_color%} "
+  fi
+}
+
 function _user_host() {
   local me
   if [[ -n $SSH_CONNECTION ]]; then

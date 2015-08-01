@@ -6,6 +6,7 @@ import sys
 import re
 from subprocess import Popen, PIPE, check_output
 
+ahead, behind = 0,0
 
 def get_tagname_or_hash():
     """return tagname if exists else hash"""

@@ -56,6 +56,9 @@ for st in status:
             branch = get_tagname_or_hash()
         elif len(st[2].strip().split('...')) == 1:
             branch = st[2].strip()
+            if branch == 'HEAD (no branch)':
+                cmd = ['git', 'log', '-1', '--format="%h"']
+                branch = subprocess.check_output(cmd).strip().strip('"')
         else:
             # current and remote branch info
             branch, rest = st[2].strip().split('...')

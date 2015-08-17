@@ -4,6 +4,7 @@ from __future__ import print_function
 import os
 import sys
 import re
+import shlex
 from subprocess import Popen, PIPE, check_output
 
 ahead, behind = 0,0
@@ -36,6 +37,27 @@ def get_stash():
             return sum(1 for _ in f)
     except IOError:
         return 0
+
+def get_tagname_or_hash():
+    """return tagname if exists else hash"""
+    cmd = 'git log -1 --format="%h%d"'
+    output = check_output(shlex.split(cmd)).decode('utf-8').strip()
+    hash_, tagname = None, None
+    # get hash
+    m = re.search('\(.*\)$', output)
+    if m:
+        hash_ = output[:m.start()-1]
+    # get tagname
+    m = re.search('tag: .*[,\)]', output)
+    if m:
+        tagname = 'tags/' + output[m.start()+len('tag: '): m.end()-1]
+
+    if tagname:
+        return tagname
+    elif hash_:
+        return hash_
+    return None
+
 
 # `git status --porcelain --branch` can collect all information
 # branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind

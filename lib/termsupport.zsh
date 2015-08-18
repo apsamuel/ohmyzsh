@@ -55,7 +55,6 @@ function omz_termsupport_precmd {
 function omz_termsupport_preexec {
   [[ "${DISABLE_AUTO_TITLE:-}" != true ]] || return 0
 
-  emulate -L zsh
   setopt extended_glob
 
   # split command into array of arguments

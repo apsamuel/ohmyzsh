@@ -90,7 +90,7 @@ svn_dirty_choose_pwd () {
 
 function svn_dirty_choose_pwd () {
   if in_svn; then
-    root=$PWD
+    local root=$PWD
     if $(svn status $root 2> /dev/null | command grep -Eq '^\s*[ACDIM!?L]'); then
       # Grep exits with 0 when "One or more lines were selected", return "dirty".
       echo $1

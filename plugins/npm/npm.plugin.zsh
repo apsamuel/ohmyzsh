@@ -22,6 +22,9 @@ alias npmg="npm i -g "
 # Install dependencies globally
 alias npmg="npm i -g "
 
+# npm package names are lowercase
+# Thus, we've used camelCase for the following aliases:
+
 # Install and save to dependencies in your package.json
 # npms is used by https://www.npmjs.com/package/npms
 alias npmS="npm i -S "

@@ -8,6 +8,10 @@
 #  function that ships with zsh itself. It will not work with the _git that ships
 #  with git.
 #
+#  This depends on and reueses some of the internals of the _git completion
+#  function that ships with zsh itself. It will not work with the _git that ships
+#  with git.
+#
 # ------------------------------------------------------------------------------
 # Authors
 # -------
@@ -193,6 +197,7 @@ _git-effort() {
         '--above[ignore file with less than x commits]'
 }
 
+
 _git-extras() {
     local curcontext=$curcontext state line ret=1
     declare -A opt_args
@@ -287,6 +292,7 @@ _git-merge-into() {
         ':src:__gitex_branch_names' \
         ':dest:__gitex_branch_names'
 }
+
 
 _git-missing() {
     _arguments \

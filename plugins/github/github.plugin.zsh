@@ -80,7 +80,10 @@ git.io() {
 # source: https://github.com/nvogel/dotzsh
 # documentation: https://github.com/blog/985-git-io-github-url-shortener
 #
-git.io() {curl -i -s http://git.io -F "url=$1" | grep "Location" | cut -f 2 -d " "}
+git.io() {
+  emulate -L zsh
+  curl -i -s http://git.io -F "url=$1" | grep "Location" | cut -f 2 -d " "
+}
 
 # End Functions #############################################################
 

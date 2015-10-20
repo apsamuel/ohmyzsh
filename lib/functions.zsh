@@ -100,7 +100,10 @@ function open_command() {
               ;;
   esac
 
-  nohup $open_cmd "$@" &>/dev/null
+  # don't use nohup on OSX
+  [[ "$OSTYPE" != darwin* ]] && open_cmd="nohup $open_cmd"
+
+  $open_cmd "$@" &>/dev/null
 }
 
 #

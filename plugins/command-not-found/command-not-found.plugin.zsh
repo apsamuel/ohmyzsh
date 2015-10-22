@@ -74,3 +74,11 @@ if [[ -x /usr/bin/command-not-found ]]; then
     /usr/bin/command-not-found "$1"
   }
 fi
+
+# OSX command-not-found support
+# https://github.com/Homebrew/homebrew-command-not-found
+if type brew &> /dev/null; then
+  if brew command command-not-found-init > /dev/null 2>&1; then
+    eval "$(brew command-not-found-init)";
+  fi
+fi

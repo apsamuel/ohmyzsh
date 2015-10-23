@@ -34,6 +34,8 @@ if (( ! found && $+commands[brew] )); then
     source "$file"
     found=1
   fi
+else
+  echo 'Please install autojump to enable the plugin (https://github.com/wting/autojump)'
 fi
 
 (( ! found )) && echo '[oh-my-zsh] autojump not found. Please install it first.'

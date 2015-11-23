@@ -367,6 +367,21 @@ wd_list_all()
         fi
     done <<< "$entries"
 
+    entries=$(sed "s:${HOME}:~:g" $WD_CONFIG)
+
+    max_warp_point_length=0
+    while IFS= read -r line
+    do
+        arr=(${(s,:,)line})
+        key=${arr[1]}
+
+        length=${#key}
+        if [[ length -gt max_warp_point_length ]]
+        then
+            max_warp_point_length=$length
+        fi
+    done <<< $entries
+
     while IFS= read -r line
     do
         if [[ $line != "" ]]
@@ -413,7 +428,7 @@ wd_path()
 wd_ls()
 {
     wd_getdir $1
-    ls $dir
+    ls ${dir/#\~/$HOME}
 }
 
 wd_path()

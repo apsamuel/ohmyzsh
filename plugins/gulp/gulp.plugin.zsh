@@ -22,7 +22,7 @@
 function _gulp_completion {
     compls=$(gulp --tasks-simple 2>/dev/null)
 
-    local completions=(${=compls})
+    completions=(${=compls})
     compadd -- $completions
 }
 

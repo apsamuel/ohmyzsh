@@ -8,7 +8,7 @@
 #  function that ships with zsh itself. It will not work with the _git that ships
 #  with git.
 #
-#  This depends on and reueses some of the internals of the _git completion
+#  This depends on and reuses some of the internals of the _git completion
 #  function that ships with zsh itself. It will not work with the _git that ships
 #  with git.
 #

@@ -198,4 +198,4 @@ We have [stickers](http://shop.planetargon.com/products/ohmyzsh-stickers-set-of-
 
 ## License
 
-Oh My Zsh is released under the [MIT license](https://github.com/robbyrussell/oh-my-zsh/blob/master/MIT-LICENSE.txt).
+Oh My Zsh is released under the [MIT license](MIT-LICENSE.txt).

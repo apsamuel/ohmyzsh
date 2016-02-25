@@ -53,6 +53,18 @@ def get_tagname_or_hash():
         return hash_
     return None
 
+# Re-use method from https://github.com/magicmonty/bash-git-prompt to get stashs count
+def get_stash():
+    cmd = Popen(['git', 'rev-parse', '--git-dir'], stdout=PIPE, stderr=PIPE)
+    so, se = cmd.communicate()
+    stash_file = '%s%s' % (so.decode('utf-8').rstrip(), '/logs/refs/stash')
+
+    try:
+        with open(stash_file) as f:
+            return sum(1 for _ in f)
+    except IOError:
+        return 0
+
 
 # `git status --porcelain --branch` can collect all information
 # branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind

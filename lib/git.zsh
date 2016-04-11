@@ -375,3 +375,12 @@ function git_repo_name() {
     echo ${repo_path:t}
   fi
 }
+
+# Output the name of the root directory of the git repository
+# Usage example: $(git_repo_name)
+function git_repo_name() {
+  local repo_path
+  if repo_path="$(git rev-parse --show-toplevel 2>/dev/null)" && [[ -n "$repo_path" ]]; then
+    echo ${repo_path:t}
+  fi
+}

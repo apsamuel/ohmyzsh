@@ -82,7 +82,7 @@ git.io() {
 #
 git.io() {
   emulate -L zsh
-  curl -i -s http://git.io -F "url=$1" | grep "Location" | cut -f 2 -d " "
+  curl -i -s https://git.io -F "url=$1" | grep "Location" | cut -f 2 -d " "
 }
 
 # End Functions #############################################################

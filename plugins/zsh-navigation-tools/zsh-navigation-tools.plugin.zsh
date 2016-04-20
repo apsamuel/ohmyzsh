@@ -61,6 +61,9 @@ fi
 
 unset __ZNT_CONFIG_FILES
 
+# Don't leave positional parameters being set
+set --
+
 #
 # Load functions
 #

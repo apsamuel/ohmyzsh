@@ -338,7 +338,7 @@ __git_sequencer_status ()
 
 __git_eread ()
 {
-	f="$1"
+	local f="$1"
 	shift
 	test -r "$f" && read "$@" <"$f"
 }

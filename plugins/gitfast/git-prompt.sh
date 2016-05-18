@@ -336,7 +336,7 @@ __git_sequencer_status ()
 	return 1
 }
 
-eread ()
+__git_eread ()
 {
 	f="$1"
 	shift

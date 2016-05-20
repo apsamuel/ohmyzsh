@@ -2236,6 +2236,12 @@ _git_send_email ()
 		__gitcomp "$(__git send-email --dump-aliases)" "" "${cur#--*=}"
 		return
 		;;
+	--to=*|--cc=*|--bcc=*|--from=*)
+		__gitcomp "
+		$(git --git-dir="$(__gitdir)" send-email --dump-aliases 2>/dev/null)
+		" "" "${cur#--*=}"
+		return
+		;;
 	--*)
 		# Older versions of git send-email don't have all the options
 		git send-email --git-completion-helper | grep -q annotate ||
@@ -2442,7 +2448,7 @@ __git_complete_config_variable_value ()
 		return
 		;;
 	branch.*.rebase)
-		__gitcomp "false true"
+		__gitcomp "false true preserve interactive"
 		return
 		;;
 	remote.pushdefault)

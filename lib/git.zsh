@@ -310,6 +310,13 @@ function git_commits_behind() {
   fi
 }
 
+# Gets the number of commits behind remote
+function git_commits_behind() {
+  if $(command git rev-parse --git-dir > /dev/null 2>&1); then
+    echo $(git rev-list --count HEAD..@{upstream})
+  fi
+}
+
 # Outputs if current branch is ahead of remote
 function git_prompt_ahead() {
   if [[ -n "$(__git_prompt_git rev-list origin/$(git_current_branch)..HEAD 2> /dev/null)" ]]; then

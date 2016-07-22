@@ -311,6 +311,7 @@ prompt_hg() {
 }
 
 prompt_hg() {
+  (( $+commands[hg] )) || return
   local rev status
   if $(hg id >/dev/null 2>&1); then
     if $(hg prompt >/dev/null 2>&1); then

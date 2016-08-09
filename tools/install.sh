@@ -82,7 +82,7 @@ OVERWRITE_CONFIRMATION=${OVERWRITE_CONFIRMATION:-yes}
 
 
 command_exists() {
-  command -v "$@" >/dev/null 2>&1
+	command -v "$@" >/dev/null 2>&1
 }
 
 user_can_sudo() {
@@ -308,6 +308,23 @@ setup_ohmyzsh() {
     exit 1
   }
 
+	printf "${BLUE}Cloning Oh My Zsh...${NORMAL}\n"
+	command_exists git || {
+		echo "Error: git is not installed"
+		exit 1
+	}
+	# The Windows (MSYS) Git is not compatible with normal use on cygwin
+	if [ "$OSTYPE" = cygwin ]; then
+		if git --version | grep msysgit > /dev/null; then
+			echo "Error: Windows/MSYS Git is not supported on Cygwin"
+			echo "Error: Make sure the Cygwin git package is installed and is first on the path"
+			exit 1
+		fi
+	fi
+	env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git "$ZSH" || {
+		printf "Error: git clone of oh-my-zsh repo failed\n"
+		exit 1
+	}
 
   # Manual clone with git config options to support git < v1.7.2
   git init --quiet "$ZSH" && cd "$ZSH" \

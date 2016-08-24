@@ -204,10 +204,9 @@ function upgrade() {
 }
 
 pacmanallkeys() {
-  # Get all keys for developers and trusted users
-  curl https://www.archlinux.org/{developers,trustedusers}/ |
-  awk -F\" '(/pgp.mit.edu/) {sub(/.*search=0x/,"");print $1}' |
-  xargs sudo pacman-key --recv-keys
+  curl https://www.archlinux.org/{developers,trustedusers}/ | \
+    awk -F\" '(/pgp.mit.edu/) { sub(/.*search=0x/,""); print $1}' | \
+    xargs sudo pacman-key --recv-keys
 }
 
 pacmansignkeys() {

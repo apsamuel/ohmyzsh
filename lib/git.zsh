@@ -312,8 +312,11 @@ function git_commits_behind() {
 
 # Gets the number of commits behind remote
 function git_commits_behind() {
-  if $(command git rev-parse --git-dir > /dev/null 2>&1); then
-    echo $(git rev-list --count HEAD..@{upstream})
+  if command git rev-parse --git-dir &>/dev/null; then
+    local commits="$(git rev-list --count HEAD..@{upstream})"
+    if [[ "$commits" != 0 ]]; then
+      echo "$ZSH_THEME_GIT_COMMITS_BEHIND_PREFIX$commits$ZSH_THEME_GIT_COMMITS_BEHIND_SUFFIX"
+    fi
   fi
 }
 

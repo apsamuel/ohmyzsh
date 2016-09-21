@@ -1,7 +1,9 @@
 # fixme - the load process here seems a bit bizarre
 zmodload -i zsh/complist
 
-WORDCHARS=''
+# should this be in keybindings?
+bindkey -M menuselect '^o' accept-and-infer-next-history
+zstyle ':completion:*:*:*:*:*' menu select
 
 unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol

@@ -90,8 +90,8 @@ svn_dirty_choose_pwd () {
 
 function svn_dirty_choose_pwd () {
   if in_svn; then
-    local root=$PWD
-    if $(svn status $root 2> /dev/null | command grep -Eq '^\s*[ACDIM!?L]'); then
+    local root=$(LANG=C svn info 2> /dev/null | sed -n 's/^Working Copy Root Path: //p')
+    if svn status $root 2> /dev/null | command grep -Eq '^\s*[ACDIM!?L]'; then
       # Grep exits with 0 when "One or more lines were selected", return "dirty".
       echo $1
     else
@@ -101,8 +101,18 @@ function svn_dirty_choose_pwd () {
   fi
 }
 
-function svn_dirty_pwd () {
+svn_dirty_pwd () {
   svn_dirty_choose_pwd $ZSH_THEME_SVN_PROMPT_DIRTY_PWD $ZSH_THEME_SVN_PROMPT_CLEAN_PWD
 }
 
-
+svn_dirty_choose_pwd () {
+  if in_svn; then
+    if svn status "$PWD" 2> /dev/null | command grep -Eq '^\s*[ACDIM!?L]'; then
+      # Grep exits with 0 when "One or more lines were selected", return "dirty".
+      echo $1
+    else
+      # Otherwise, no lines were found, or an error occurred. Return clean.
+      echo $2
+    fi
+  fi
+}

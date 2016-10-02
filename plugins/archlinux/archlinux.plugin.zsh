@@ -39,7 +39,7 @@ elif (( $+commands[yaourt] )); then
   }
 else
   upgrade() {
-    pacman -Syu
+    sudo pacman -Syu
   }
 fi
 

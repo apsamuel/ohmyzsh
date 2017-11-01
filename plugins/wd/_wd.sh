@@ -29,6 +29,19 @@ function _wd() {
     points[$name]=$target_path
   done < $WD_CONFIG
 
+  typeset -A points
+  while read -r line
+  do
+    arr=(${(s,:,)line})
+    name=${arr[1]}
+    path=${arr[2]}
+
+    # replace ~ from path to fix completion (#17)
+    path=${path/#\~/$HOME}
+
+    points[$name]=$path
+  done < $CONFIG
+
   commands=(
     'add:Adds the current working directory to your warp points'
     'addcd:Adds a directory to your warp points'

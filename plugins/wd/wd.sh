@@ -140,7 +140,7 @@ wd_warp()
 
     if [[ $point =~ "^\.+$" ]]
     then
-        if [ $#1 < 2 ]
+        if [[ $#1 < 2 ]]
         then
             wd_exit_warn "Warping to current directory?"
         else
@@ -177,6 +177,11 @@ wd_add()
     if [ ! -w "$wd_config_file" ]; then
         wd_exit_fail "\'$wd_config_file\' is not writeable."
         return
+    fi
+
+    if [[ $point == "" ]]
+    then
+        point=$(basename $PWD)
     fi
 
     if [[ $point =~ "^[\.]+$" ]]

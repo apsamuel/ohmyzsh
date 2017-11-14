@@ -3,8 +3,8 @@
 #######################################
 
 if (( $+commands[pacaur] )); then
-  alias paupg='pacaur -Syua'
-  alias pasu='pacaur -Syua --noconfirm'
+  alias paupg='pacaur -Syu'
+  alias pasu='pacaur -Syu --noconfirm'
   alias pain='pacaur -S'
   alias pains='pacaur -U'
   alias pare='pacaur -R'

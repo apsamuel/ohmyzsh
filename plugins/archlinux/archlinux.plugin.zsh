@@ -30,19 +30,19 @@ if (( $+commands[pacaur] )); then
 fi
 
 if (( $+commands[trizen] )); then
-  upgrade() {
+  function upgrade() {
     trizen -Syu
   }
 elif (( $+commands[pacaur] )); then
-  upgrade() {
+  function upgrade() {
     pacaur -Syu
   }
 elif (( $+commands[yaourt] )); then
-  upgrade() {
+  function upgrade() {
     yaourt -Syu
   }
 else
-  upgrade() {
+  function upgrade() {
     sudo pacman -Syu
   }
 fi
@@ -248,14 +248,14 @@ function upgrade() {
   fi
 }
 
-pacmanallkeys() {
+function pacmanallkeys() {
   emulate -L zsh
   curl -s https://www.archlinux.org/people/{developers,trustedusers}/ | \
     awk -F\" '(/pgp.mit.edu/) { sub(/.*search=0x/,""); print $1}' | \
     xargs sudo pacman-key --recv-keys
 }
 
-pacmansignkeys() {
+function pacmansignkeys() {
   emulate -L zsh
   for key in $*; do
     sudo pacman-key --recv-keys $key

@@ -29,7 +29,11 @@ if (( $+commands[pacaur] )); then
   fi
 fi
 
-if (( $+commands[pacaur] )); then
+if (( $+commands[trizen] )); then
+  upgrade() {
+    trizen -Syu
+  }
+elif (( $+commands[pacaur] )); then
   upgrade() {
     pacaur -Syu
   }

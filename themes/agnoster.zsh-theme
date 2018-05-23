@@ -33,7 +33,6 @@
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
 CURRENT_BG='NONE'
-zmodload zsh/parameter
 
 case ${SOLARIZED_THEME:-dark} in
     light)
@@ -129,23 +128,23 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    PROMPT+=" %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
   else
-    PROMPT+="%{$bg%}%{$fg%} "
+    echo -n "%{$bg%}%{$fg%} "
   fi
   CURRENT_BG=$1
-  [[ -n $3 ]] && PROMPT+=$3
+  [[ -n $3 ]] && echo -n $3
 }
 
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    PROMPT+=" %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
   else
-    PROMPT+="%{%k%}"
+    echo -n "%{%k%}"
   fi
-  PROMPT+="%{%f%}"
-  CURRENT_BG='NONE'
+  echo -n "%{%f%}"
+  CURRENT_BG=''
 }
 
 git_toplevel() {
@@ -319,15 +318,15 @@ prompt_bzr() {
         revision=`bzr log | head -n2 | tail -n1 | sed 's/^revno: //'`
         if [[ $status_mod -gt 0 ]] ; then
             prompt_segment yellow black
-            PROMPT+="bzr@$revision ✚ "
+            echo -n "bzr@"$revision "✚ "
         else
             if [[ $status_all -gt 0 ]] ; then
                 prompt_segment yellow black
-                PROMPT+="bzr@$revision"
+                echo -n "bzr@"$revision
 
             else
                 prompt_segment green black
-                PROMPT+="bzr@$revision"
+                echo -n "bzr@"$revision
             fi
         fi
     fi
@@ -341,16 +340,16 @@ prompt_hg() {
       if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
         # if files are not added
         prompt_segment red white
-        st=' ±'
+        st='±'
       elif [[ -n $(hg prompt "{status|modified}") ]]; then
         # if any modification
         prompt_segment yellow black
-        st=' ±'
+        st='±'
       else
         # if working copy is clean
         prompt_segment green black
       fi
-      PROMPT+="$(hg prompt "☿ {rev}@{branch}")$st"
+      echo -n $(hg prompt "☿ {rev}@{branch}") $st
     else
       st=""
       rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
@@ -360,11 +359,11 @@ prompt_hg() {
         st='±'
       elif `hg st | grep -q "^(M|A)"`; then
         prompt_segment yellow black
-        st=' ±'
+        st='±'
       else
         prompt_segment green black
       fi
-      PROMPT+="☿ $rev@$branch$st"
+      echo -n "☿ $rev@$branch" $st
     fi
   fi
 }
@@ -437,7 +436,6 @@ prompt_terraform() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
-  PROMPT='%{%f%b%k%}'
   prompt_status
   prompt_virtualenv
   prompt_aws
@@ -448,8 +446,6 @@ build_prompt() {
   prompt_bzr
   prompt_hg
   prompt_end
-  PROMPT+=' '
 }
 
-autoload -U add-zsh-hook
-add-zsh-hook precmd build_prompt
+PROMPT='%{%f%b%k%}$(build_prompt) '

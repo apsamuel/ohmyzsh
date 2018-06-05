@@ -235,7 +235,7 @@ function xcselv {
 
 function _omz_xcode_print_xcselv_usage {
   cat << EOF >&2
-Usage: 
+Usage:
   xcselv <version>
   xcselv [options]
 

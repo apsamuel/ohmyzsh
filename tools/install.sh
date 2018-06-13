@@ -303,7 +303,7 @@ setup_ohmyzsh() {
     fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
     exit 1
   fi
-  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $ZSH || {
+  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git "$ZSH" || {
     printf "Error: git clone of oh-my-zsh repo failed\n"
     exit 1
   }

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Kubernetes prompt helper for bash/zsh
+# ported to oh-my-zsh
 # Displays current context and namespace
 
 # Copyright 2026 Jon Mosco

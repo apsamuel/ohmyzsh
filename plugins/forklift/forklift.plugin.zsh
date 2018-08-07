@@ -85,6 +85,18 @@ function fl {
     else if forkLift is not null then
         set appName to forkLift
     end if
+    
+    tell application appName
+        activate
+        set forkLiftVersion to version
+    end tell
+    repeat until application appName is running
+        delay 1
+    end repeat
+    tell application appName
+        activate
+    end tell
+  end if
 
     tell application appName
         activate

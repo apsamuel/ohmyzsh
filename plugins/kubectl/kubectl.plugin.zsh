@@ -87,10 +87,10 @@ alias kdcm='kubectl describe configmap'
 alias kdelcm='kubectl delete configmap'
 
 # Ingress management
-alias kgi='k get ingress'
-alias kei='k edit ingress'
-alias kdi='k describe ingress'
-alias kdeli='k delete ingress'
+alias kgi='kubectl get ingress'
+alias kei='kubectl edit ingress'
+alias kdi='kubectl describe ingress'
+alias kdeli='kubectl delete ingress'
 
 # Secret management
 alias kgsec='kubectl get secret'

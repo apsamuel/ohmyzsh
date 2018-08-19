@@ -294,6 +294,23 @@ _git-merge-into() {
 }
 
 
+_git-ignore() {
+    _arguments  -C \
+        '(--append -a)'{--append,-a}'[append .gitignore]' \
+        '(--replace -r)'{--replace,-r}'[replace .gitignore]' \
+        '(--list-in-table -l)'{--list-in-table,-l}'[print available types in table format]' \
+        '(--list-alphabetically -L)'{--list-alphabetically,-L}'[print available types in alphabetical order]' \
+        '(--search -s)'{--search,-s}'[search word in available types]'
+}
+
+
+_git-merge-into() {
+    _arguments '--ff-only[merge only fast-forward]'
+    _arguments \
+        ':src:__gitex_branch_names' \
+        ':dest:__gitex_branch_names'
+}
+
 _git-missing() {
     _arguments \
         ':first-branch-name:__gitex_branch_names' \

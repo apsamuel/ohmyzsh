@@ -81,6 +81,9 @@ zsh_path() {
 
 
 zsh_path() {
+  local colors
+  colors=$(echoti colors)
+
   local -A yellow
   yellow=(
     1  '%F{228}'   2  '%F{222}'   3  '%F{192}'   4  '%F{186}'
@@ -94,7 +97,7 @@ zsh_path() {
   for c (${(s::)PWD}); do
     if [[ $c = "/" ]]; then
       if [[ $i -eq 1 ]]; then
-        if [[ -n "$DISPLAY" ]]; then
+        if [[ $colors -ge 256 ]]; then
           print -Pn '%F{065}%B /%b%f'
         else
           print -Pn '\e[31;1m /%f'
@@ -103,14 +106,14 @@ zsh_path() {
         continue
       fi
 
-      if [[ -n "$DISPLAY" ]]; then
+      if [[ $colors -ge 256 ]]; then
         print -Pn "${yellow[$i]:-%f} » %f"
       else
         print -Pn "%F{yellow} > %f"
       fi
       (( i += 6 ))
     else
-      if [[ -n "$DISPLAY" ]]; then
+      if [[ $colors -ge 256 ]]; then
         print -Pn "%F{065}$c%f"
       else
         print -Pn "%F{blue}$c%f"

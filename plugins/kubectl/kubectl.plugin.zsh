@@ -153,6 +153,9 @@ alias klf1s='kubectl logs --since 1s -f'
 # File copy
 alias kcp='kubectl cp'
 
+# File copy
+alias kcp='kubectl cp'
+
 # Node Management
 alias kgno='kubectl get nodes'
 alias kgnosl='kubectl get nodes --show-labels'

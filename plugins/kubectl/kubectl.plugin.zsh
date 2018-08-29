@@ -56,6 +56,9 @@ alias kdp='kubectl describe pods'
 alias kdelp='kubectl delete pods'
 alias kgpall='kubectl get pods --all-namespaces -o wide'
 
+# get pod by label: kgpl "app=myapp" -n myns
+alias kgpl='function _kgpl(){ label=$1; shift; kgp -l $label $*; };_kgpl'
+
 # Service management.
 alias kgs='kubectl get svc'
 alias kgsa='kubectl get svc --all-namespaces'

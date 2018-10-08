@@ -2,6 +2,35 @@
 #               Pacman                #
 #######################################
 
+if (( $+commands[yay] )); then
+  alias yaconf='yay -Pg'
+  alias yaupg='yay -Syu'
+  alias yasu='yay -Syu --noconfirm'
+  alias yain='yay -S'
+  alias yains='yay -U'
+  alias yare='yay -R'
+  alias yarem='yay -Rns'
+  alias yarep='yay -Si'
+  alias yareps='yay -Ss'
+  alias yaloc='yay -Qi'
+  alias yalocs='yay -Qs'
+  alias yalst='yay -Qe'
+  alias yaorph='yay -Qtd'
+  alias yainsd='yay -S --asdeps'
+  alias yamir='yay -Syy'
+
+
+  if (( $+commands[abs] && $+commands[aur] )); then
+    alias yaupd='yay -Sy && sudo abs && sudo aur'
+  elif (( $+commands[abs] )); then
+    alias yaupd='yay -Sy && sudo abs'
+  elif (( $+commands[aur] )); then
+    alias yaupd='yay -Sy && sudo aur'
+  else
+    alias yaupd='yay -Sy'
+  fi
+fi
+
 if (( $+commands[pacaur] )); then
   alias paupg='pacaur -Syu'
   alias pasu='pacaur -Syu --noconfirm'
@@ -40,6 +69,10 @@ elif (( $+commands[pacaur] )); then
 elif (( $+commands[yaourt] )); then
   function upgrade() {
     yaourt -Syu
+  }
+elif (( $+commands[yay] )); then
+  function upgrade() {
+    yay -Syu
   }
 else
   function upgrade() {

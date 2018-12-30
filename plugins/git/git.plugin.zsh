@@ -86,6 +86,11 @@ function work_in_progress() {
   command git -c log.showSignature=false log -n 1 2>/dev/null | grep -q -- "--wip--" && echo "WIP!!"
 }
 
+function _omz_git_stash_command() {
+  [[ `git --version 2>/dev/null` =~ '^git version ([[:digit:]]+.[[:digit:]]+)' && "$match[1]" >= '2.13' ]] \
+  && echo push || echo save
+}
+
 #
 # Aliases
 # (sorted alphabetically by command)

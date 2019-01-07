@@ -100,6 +100,7 @@ alias kgns='kubectl get namespaces'
 alias kens='kubectl edit namespace'
 alias kdns='kubectl describe namespace'
 alias kdelns='kubectl delete namespace'
+alias kcn='kubectl config set-context $(kubectl config current-context) --namespace' #change namespace
 
 # ConfigMap management
 alias kgcm='kubectl get configmaps'

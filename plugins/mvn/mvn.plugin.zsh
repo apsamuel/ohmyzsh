@@ -85,55 +85,38 @@ alias mvntc='mvn tomcat:run'
 alias mvntc7='mvn tomcat7:run'
 alias mvn-updates='mvn versions:display-dependency-updates'
 
-#realpath replacement for iOS - not always present
-function _realpath {
-	if [[ -f "$1" ]]
-	then
-		# file *must* exist
-		if cd "$(echo "${1%/*}")" &>/dev/null
-		then
-			# file *may* not be local
-			# exception is ./file.ext
-			# try 'cd .; cd -;' *works!*
-			local tmppwd="$PWD"
-			cd - &>/dev/null
-		else
-			# file *must* be local
-			local tmppwd="$PWD"
-		fi
-	else
-		# file *cannot* exist
-		return 1 # failure
+
+function listMavenCompletions {
+	local file new_file
+	local -a profiles POM_FILES
+
+	# Root POM
+	POM_FILES=(~/.m2/settings.xml)
+
+	# POM in the current directory
+	if [[ -f pom.xml ]]; then
+		local file=pom.xml
+		POM_FILES+=("${file:A}")
 	fi
 
-	# reassemble realpath
-	echo "$tmppwd"/"${1##*/}"
-	return 1 #success
-}
+	# Look for POM files in parent directories
+	while [[ -n "$file" ]] && grep -q "<parent>" "$file"; do
+		# look for a new relativePath for parent pom.xml
+		new_file=$(grep -e "<relativePath>.*</relativePath>" "$file" | sed -e 's/.*<relativePath>\(.*\)<\/relativePath>.*/\1/')
 
-function __pom_hierarchy {
-	local file=`_realpath "pom.xml"`
-	POM_HIERARCHY+=("~/.m2/settings.xml")
-	POM_HIERARCHY+=("$file")
-	while [ -n "$file" ] && grep -q "<parent>" $file; do
-		##look for a new relativePath for parent pom.xml
-		local new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
-
-		## <parent> is present but not defined. Asume ../pom.xml
-		if [ -z "$new_file" ]; then
+		# if <parent> is present but not defined, assume ../pom.xml
+		if [[ -z "$new_file" ]]; then
 			new_file="../pom.xml"
 		fi
 
-		## if file exists continue else break
-		new_pom=`_realpath "${file%/*}/$new_file"`
-		if [ -n "$new_pom" ]; then
-			file=$new_pom
-		else
+		# if file doesn't exist break
+		file="${file:h}/${new_file}"
+		if ! [[ -e "$file" ]]; then
 			break
 		fi
-		POM_HIERARCHY+=("$file")
+
+		POM_FILES+=("${file:A}")
 	done
-}
 
 function listMavenCompletions {
   local file new_file

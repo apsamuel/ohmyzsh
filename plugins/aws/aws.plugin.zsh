@@ -178,6 +178,15 @@ function acp() {
 
     echo "Switched to AWS Profile: $profile"
   fi
+
+  echo Insert the credentials when asked.
+  asp "$1"
+  aws iam create-access-key
+  aws configure --profile "$1"
+
+  echo You can now safely delete the old access key running \`aws iam delete-access-key --access-key-id ID\`
+  echo Your current keys are:
+  aws iam list-access-keys
 }
 
 function aws_change_access_key() {

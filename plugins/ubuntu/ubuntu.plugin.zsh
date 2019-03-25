@@ -33,7 +33,6 @@ compdef _acsp acsp='apt-cache showpkg'
 
 #List all installed packages
 alias agli='apt list --installed'
-compdef _agli agli='apt list --installed'
 
 # superuser operations ######################################################
 

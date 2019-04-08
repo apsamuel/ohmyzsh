@@ -72,6 +72,20 @@
 # easier to emulate it in Zsh. Every time a new __gitcomp* function is added,
 # the corresponding function should be added to Zsh.
 
+# Fills the COMPREPLY array with prefiltered words without any additional
+# processing.
+# Callers must take care of providing only words that match the current word
+# to be completed and adding any prefix and/or suffix (trailing space!), if
+# necessary.
+# 1: List of newline-separated matching completion words, complete with
+#    prefix and suffix.
+__gitcomp_direct ()
+{
+	local IFS=$'\n'
+
+	COMPREPLY=($1)
+}
+
 __gitcompappend ()
 {
 	local x i=${#COMPREPLY[@]}
@@ -2237,9 +2251,7 @@ _git_send_email ()
 		return
 		;;
 	--to=*|--cc=*|--bcc=*|--from=*)
-		__gitcomp "
-		$(git --git-dir="$(__gitdir)" send-email --dump-aliases 2>/dev/null)
-		" "" "${cur#--*=}"
+		__gitcomp "$(__git send-email --dump-aliases)" "" "${cur#--*=}"
 		return
 		;;
 	--*)
@@ -2732,6 +2744,15 @@ _git_remote ()
 	prune,--*)
 		__gitcomp_builtin remote_prune
 		;;
+	set-url,--*)
+		__gitcomp "--push --add --delete"
+		;;
+	get-url,--*)
+		__gitcomp "--push --all"
+		;;
+	prune,--*)
+		__gitcomp "--dry-run"
+		;;
 	*)
 		__gitcomp_nl "$(__git_remotes)"
 		;;
@@ -3184,8 +3205,8 @@ _git_tag ()
 	--*)
 		__gitcomp "
 			--list --delete --verify --annotate --message --file
-			--sign --cleanup --local-user --force --column --sort
-			--contains --points-at
+			--sign --cleanup --local-user --force --column --sort=
+			--contains --no-contains --points-at --merged --no-merged --create-reflog
 			"
 		;;
 	esac

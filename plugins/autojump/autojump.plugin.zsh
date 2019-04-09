@@ -34,8 +34,12 @@ if (( ! found && $+commands[brew] )); then
     source "$file"
     found=1
   fi
-else
-  echo 'Please install autojump to enable the plugin (https://github.com/wting/autojump)'
+done
+
+# if no path found, try Homebrew
+if (( ! found && $+commands[brew] )); then
+  file=$(brew --prefix)/etc/profile.d/autojump.sh
+  [[ -f "$file" ]] && source "$file"
 fi
 
 (( ! found )) && echo '[oh-my-zsh] autojump not found. Please install it first.'

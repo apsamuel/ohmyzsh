@@ -4,7 +4,7 @@
 if [[ -e /Applications/Bwana.app ]] ||
     ( system_profiler -detailLevel mini SPApplicationsDataType | grep -q Bwana )
 then
-  function man() {
+  function bwana() {
     open "man:$1"
   }
 else

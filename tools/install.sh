@@ -311,20 +311,18 @@ setup_ohmyzsh() {
 	echo "${BLUE}Cloning Oh My Zsh...${NORMAL}"
 
 	command_exists git || {
-		echo "Error: git is not installed"
+		error "git is not installed"
 		exit 1
 	}
 
 	if [ "$OSTYPE" = cygwin ] && git --version | grep -q msysgit; then
-		cat <<-EOF
-			Error: Windows/MSYS Git is not supported on Cygwin
-			Error: Make sure the Cygwin git package is installed and is first on the $PATH
-		EOF
+		error "Windows/MSYS Git is not supported on Cygwin"
+		error "Make sure the Cygwin git package is installed and is first on the \$PATH"
 		exit 1
 	fi
 
 	git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git "$ZSH" || {
-		echo "Error: git clone of oh-my-zsh repo failed"
+		error "git clone of oh-my-zsh repo failed"
 		exit 1
 	}
 }

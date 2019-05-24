@@ -308,7 +308,7 @@ setup_ohmyzsh() {
     exit 1
   }
 
-	echo "${BLUE}Cloning Oh My Zsh...${NORMAL}"
+	echo "${BLUE}Cloning Oh My Zsh...${RESET}"
 
 	command_exists git || {
 		error "git is not installed"

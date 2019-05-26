@@ -180,7 +180,7 @@ function acp() {
   fi
 
   echo Insert the credentials when asked.
-  asp "$1"
+  asp "$1" || return 1
   aws iam create-access-key
   aws configure --profile "$1"
 

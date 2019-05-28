@@ -329,6 +329,8 @@ setup_ohmyzsh() {
 		error "git clone of oh-my-zsh repo failed"
 		exit 1
 	}
+
+	echo
 }
 
   # Manual clone with git config options to support git < v1.7.2

@@ -23,6 +23,7 @@
 #   REPO    - name of the GitHub repo to install from (default: ohmyzsh/ohmyzsh)
 #   REMOTE  - full remote URL of the git repo to install (default: GitHub via HTTPS)
 #   BRANCH  - branch to check out immediately after install (default: master)
+#
 # Other options:
 #   CHSH    - 'no' means the installer will not change the default shell (default: yes)
 #   RUNZSH  - 'no' means the installer will not run zsh after the install (default: yes)

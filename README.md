@@ -322,7 +322,8 @@ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 ```sh
 chsh -s $(which zsh)
 ```
-You must log out and log back in to see this change.
+
+You must log out from your user session and log back in to see this change.
 
 You must log out from your user session and log back in to see this change.
 

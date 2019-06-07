@@ -2460,7 +2460,7 @@ __git_complete_config_variable_value ()
 		return
 		;;
 	branch.*.rebase)
-		__gitcomp "false true preserve interactive"
+		__gitcomp "false true merges preserve interactive"
 		return
 		;;
 	remote.pushdefault)
@@ -2684,6 +2684,13 @@ _git_config ()
 		__git_complete_config_variable_value
 		return
 		;;
+	*.*)
+		__git_compute_config_vars
+		__gitcomp "$__git_config_vars"
+		;;
+	*)
+		__git_compute_config_vars
+		__gitcomp "$(echo "$__git_config_vars" | sed 's/\.[^ ]*/./g')"
 	esac
 	case "$cur" in
 	--*)
@@ -2745,13 +2752,13 @@ _git_remote ()
 		__gitcomp_builtin remote_prune
 		;;
 	set-url,--*)
-		__gitcomp "--push --add --delete"
+		__gitcomp_builtin remote_set-url
 		;;
 	get-url,--*)
-		__gitcomp "--push --all"
+		__gitcomp_builtin remote_get-url
 		;;
 	prune,--*)
-		__gitcomp "--dry-run"
+		__gitcomp_builtin remote_prune
 		;;
 	*)
 		__gitcomp_nl "$(__git_remotes)"
@@ -3335,6 +3342,52 @@ __git_complete_command () {
 		_completion_loader "git-$command"
 	fi
 	if __git_have_func $completion_func
+	then
+		$completion_func
+		return 0
+	elif __git_support_parseopt_helper "$command"
+	then
+		__git_complete_common "$command"
+		return 0
+	else
+		return 1
+	fi
+}
+
+__git_complete_common () {
+	local command="$1"
+
+	case "$cur" in
+	--*)
+		__gitcomp_builtin "$command"
+		;;
+	esac
+}
+
+__git_cmds_with_parseopt_helper=
+__git_support_parseopt_helper () {
+	test -n "$__git_cmds_with_parseopt_helper" ||
+		__git_cmds_with_parseopt_helper="$(__git --list-cmds=parseopt)"
+
+	case " $__git_cmds_with_parseopt_helper " in
+	*" $1 "*)
+		return 0
+		;;
+	*)
+		return 1
+		;;
+	esac
+}
+
+__git_complete_command () {
+	local command="$1"
+	local completion_func="_git_${command//-/_}"
+	if ! declare -f $completion_func >/dev/null 2>/dev/null &&
+		declare -f _completion_loader >/dev/null 2>/dev/null
+	then
+		_completion_loader "git-$command"
+	fi
+	if declare -f $completion_func >/dev/null 2>/dev/null
 	then
 		$completion_func
 		return 0

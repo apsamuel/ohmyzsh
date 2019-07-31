@@ -42,6 +42,17 @@ function _frontend_fallback() {
   fi
 }
 
+function _frontend_fallback() {
+  local url
+  if [[ "$FRONTEND_SEARCH_FALLBACK" == duckduckgo ]]; then
+    url="https://duckduckgo.com/?sites=$1&q="
+  else
+    url="https://google.com/search?as_sitesearch=$1&as_q="
+  fi
+
+  echo "$url"
+}
+
 function frontend() {
   emulate -L zsh
 

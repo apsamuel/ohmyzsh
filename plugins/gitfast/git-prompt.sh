@@ -583,7 +583,7 @@ __git_ps1 ()
 	local z="${GIT_PS1_STATESEPARATOR-" "}"
 
 	b=${b##refs/heads/}
-	if [ "$pcmode" = "yes" ] && [ "$ps1_expanded" = "yes" ]; then
+	if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
 		__git_ps1_branch_name=$b
 		b="\${__git_ps1_branch_name}"
 	else
@@ -598,8 +598,8 @@ __git_ps1 ()
 	local f="$h$w$i$s$u$p"
 	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}${conflict}"
 
-	if [ "$pcmode" = "yes" ]; then
-		if [ "${__git_printf_supports_v-}" != "yes" ]; then
+	if [ "$pcmode" = yes ]; then
+		if [ "${__git_printf_supports_v-}" != yes ]; then
 			gitstring=$(printf -- "$printf_format" "$gitstring")
 		else
 			printf -v gitstring -- "$printf_format" "$gitstring"

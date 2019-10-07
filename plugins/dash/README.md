@@ -19,7 +19,12 @@ dash
 
 - Query for something in dash app: `dash query`
 ```
-dash golang
+dash golang 
+```
+
+- You can optionally provide a keyword: `dash [keyword:]query`
+```
+dash python:tuple
 ```
 
 - You can optionally provide a keyword: `dash [keyword:]query`

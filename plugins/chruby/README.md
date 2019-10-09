@@ -5,7 +5,6 @@ current Ruby version, and completion and a prompt function to display the Ruby v
 Supports brew and manual installation of chruby.
 
 To use it, add `chruby` to the plugins array in your zshrc file:
-
 ```zsh
 plugins=(... chruby)
 ```

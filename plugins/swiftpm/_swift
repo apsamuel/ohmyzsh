@@ -448,8 +448,14 @@ _swift_package() {
                 (dump-symbol-graph)
                     _swift_package_dump-symbol-graph
                     ;;
-                (dump-package)
-                    _swift_package_dump-package
+                (resolve)
+                    _swift_package_resolve
+                    ;;
+                (reset)
+                    _swift_package_reset
+                    ;;
+                (generate-xcodeproj)
+                    _swift_package_generate-xcodeproj
                     ;;
                 (edit)
                     _swift_package_edit
@@ -661,6 +667,7 @@ _swift_package_config() {
                 'set-mirror:Set a mirror for a dependency'
                 'unset-mirror:Remove an existing mirror'
                 'get-mirror:Print mirror configuration for the given package dependency'
+                'set-mirror:Set a mirror for a dependency'
             )
             _describe "subcommand" subcommands
             ;;
@@ -675,11 +682,21 @@ _swift_package_config() {
                 (get-mirror)
                     _swift_package_config_get-mirror
                     ;;
+                (set-mirror)
+                    _swift_package_config_set-mirror
+                    ;;
             esac
             ;;
     esac
 
     return ret
+}
+
+_swift_package_config_get-mirror() {
+    arguments=(
+        "--package-url[The package dependency url]:The package dependency url: "
+    )
+    _arguments $arguments && return
 }
 
 _swift_package_config_set-mirror() {

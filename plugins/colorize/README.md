@@ -12,6 +12,7 @@ To use it, add colorize to the plugins array of your `~/.zshrc` file:
 ```
 plugins=(... colorize)
 ```
+## Configuration
 
 ## Configuration
 

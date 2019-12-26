@@ -55,7 +55,7 @@ _knife() {
       ;;
     environment)
       compadd -Q "$@" list create delete edit show "from file"
-    ;;
+      ;;
     node)
       compadd -Q "$@" "from file" create show edit delete list run_list "bulk delete"
       ;;

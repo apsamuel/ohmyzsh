@@ -72,4 +72,3 @@ function svn_status_info() {
   fi
   echo $svn_status_string
 }
-

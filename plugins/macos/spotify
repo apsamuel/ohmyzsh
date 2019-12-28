@@ -470,6 +470,7 @@ while [ $# -gt 0 ]; do
         "help" )
             showHelp;
             break ;;
+
         * )
             showHelp;
             return 1;

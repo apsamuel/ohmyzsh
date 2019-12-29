@@ -104,6 +104,7 @@ alias kcn='kubectl config set-context $(kubectl config current-context) --namesp
 
 # ConfigMap management
 alias kgcm='kubectl get configmaps'
+alias kgcma='kubectl get configmaps --all-namespaces'
 alias kecm='kubectl edit configmap'
 alias kdcm='kubectl describe configmap'
 alias kdelcm='kubectl delete configmap'

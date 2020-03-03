@@ -125,10 +125,9 @@ function omz_termsupport_preexec {
     esac
 
     # override preexec function arguments with job command
-    local job_cmd="${jobtexts[$job_id]}"
-    if [[ -n "$job_cmd" ]]; then
-      1="$job_cmd"
-      2="$job_cmd"
+    if [[ -n "${jobtexts[$job_id]}" ]]; then
+      1="${jobtexts[$job_id]}"
+      2="${jobtexts[$job_id]}"
     fi
   fi
 

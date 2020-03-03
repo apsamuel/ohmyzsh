@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Kubernetes prompt helper for bash/zsh
-# ported to oh-my-zsh
 # Displays current context and namespace
 
 # Copyright 2026 Jon Mosco
@@ -164,7 +163,7 @@ _kube_ps1_color_bg() {
 }
 
 _kube_ps1_binary_check() {
-  command -v "$1" >/dev/null
+  command -v $1 >/dev/null
 }
 
 _kube_ps1_symbol() {

@@ -121,6 +121,18 @@ If neither binary is available, the prompt will print the following:
 (<symbol>|BINARY-N/A:N/A)
 ```
 
+Set the binary to `oc` with the following environment variable:
+
+```
+KUBE_PS1_BINARY=oc
+```
+
+If neither binary is available, the prompt will print the following:
+
+```
+(<symbol>|BINARY-N/A:N/A)
+```
+
 ## Helper utilities
 
 There are several great tools that make using kubectl very enjoyable:

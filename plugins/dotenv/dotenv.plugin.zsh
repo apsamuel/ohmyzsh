@@ -333,8 +333,4 @@ source_env() {
 autoload -U add-zsh-hook
 add-zsh-hook chpwd source_env
 
-if [[ -z $ZSH_DOTENV_FILE ]]; then
-    ZSH_DOTENV_FILE=.env
-fi
-
 source_env

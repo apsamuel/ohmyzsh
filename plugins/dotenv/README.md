@@ -31,6 +31,7 @@ SECRET_KEY=7c6c72d959416d5aa368a409362ec6e2ac90d7f
 MONGO_URI=mongodb://127.0.0.1:27017
 PORT=3001
 ```
+
 You can even mix both formats, although it's probably a bad idea.
 
 You can even mix both formats, although it's probably a bad idea.

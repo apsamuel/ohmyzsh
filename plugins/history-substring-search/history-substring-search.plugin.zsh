@@ -26,8 +26,7 @@ fi
 
 
 # Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
+
 if [[ -n "$terminfo[kcuu1]" ]]; then
   bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
   bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up

@@ -51,6 +51,12 @@ function git_main_branch() {
   return 1
 }
 
+alias gam='git am'
+alias gamc='git am --continue'
+alias gams='git am --skip'
+alias gama='git am --abort'
+alias gamscp='git am --show-current-patch'
+
 function grename() {
   if [[ -z "$1" || -z "$2" ]]; then
     echo "Usage: $0 old_branch new_branch"

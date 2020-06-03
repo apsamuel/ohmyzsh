@@ -40,7 +40,7 @@ function _wd() {
     target_path=${target_path/#\~/$HOME}
 
     points[$name]=$target_path
-  done < $CONFIG
+  done < $WD_CONFIG
 
   commands=(
     'add:Adds the current working directory to your warp points'

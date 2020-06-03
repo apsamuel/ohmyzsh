@@ -170,6 +170,7 @@ wd addcd /foo/ bar
 wd addcd /foo/
 ```
 
+## Usage
 
 You can omit point name to automatically use the current directory's name instead.
 

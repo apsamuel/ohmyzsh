@@ -59,6 +59,9 @@ alias kgpall='kubectl get pods --all-namespaces -o wide'
 # get pod by label: kgpl "app=myapp" -n myns
 alias kgpl='kgp -l'
 
+# get pod by namespace: kgpn kube-system"
+alias kgpn='kgp -n'
+
 # Service management.
 alias kgs='kubectl get svc'
 alias kgsa='kubectl get svc --all-namespaces'

@@ -942,3 +942,12 @@ function _omz::version {
     printf "%s (%s)\n" "$version" "$commit"
   )
 }
+
+function _omz::update {
+    env ZSH="$ZSH" sh "$ZSH/tools/upgrade.sh"
+    # Update last updated file
+    zmodload zsh/datetime
+    echo "LAST_EPOCH=$(( EPOCHSECONDS / 60 / 60 / 24 ))" >! "${ZSH_CACHE_DIR}/.zsh-update"
+    # Remove update lock if it exists
+    command rm -rf "$ZSH/log/update.lock"
+}

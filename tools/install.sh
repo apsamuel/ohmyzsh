@@ -244,6 +244,10 @@ fmt_error() {
   printf '%sError: %s%s\n' "${FMT_BOLD}${FMT_RED}" "$*" "$FMT_RESET" >&2
 }
 
+underline() {
+	echo "$(printf '\033[4m')$@$(printf '\033[24m')"
+}
+
 setup_color() {
   # Only use colors if connected to a terminal
   if ! is_tty; then

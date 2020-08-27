@@ -75,8 +75,12 @@ PAT$</dt><dd>
   use "pushd" to change to the target directory.</dd><dt>
 
 -A, --all</dt><dd>
-  include all matching directories.  Disregard matching by directory
-  alias and filtering of less likely paths.</dd><dt>
+  display all directories even those excluded by patterns in
+  <em>~/.scdignore</em>.  Disregard the unique matching for a
+  directory alias and filtering of less likely paths.</dd><dt>
+
+-p, --push</dt><dd>
+  use "pushd" to change to the target directory.</dd><dt>
 
 --list</dt><dd>
   show matching directories and exit.</dd><dt>

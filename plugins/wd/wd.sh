@@ -181,7 +181,7 @@ wd_add()
 
     if [[ $point == "" ]]
     then
-        point=$(basename $PWD)
+        point=$(basename "$PWD")
     fi
 
     if [[ $point =~ "^[\.]+$" ]]
@@ -372,7 +372,7 @@ wd_list_all()
         fi
     done <<< "$entries"
 
-    entries=$(sed "s:${HOME}:~:g" $WD_CONFIG)
+    entries=$(sed "s:${HOME}:~:g" "$WD_CONFIG")
 
     max_warp_point_length=0
     while IFS= read -r line
@@ -385,7 +385,7 @@ wd_list_all()
         then
             max_warp_point_length=$length
         fi
-    done <<< $entries
+    done <<< "$entries"
 
     while IFS= read -r line
     do
@@ -432,14 +432,14 @@ wd_path()
 
 wd_ls()
 {
-    wd_getdir $1
-    ls ${dir/#\~/$HOME}
+    wd_getdir "$1"
+    ls "${dir/#\~/$HOME}"
 }
 
 wd_path()
 {
-    wd_getdir $1
-    echo $(echo $dir | sed "s:${HOME}:~:g")
+    wd_getdir "$1"
+    echo "$(echo "$dir" | sed "s:${HOME}:~:g")"
 }
 
 wd_show()

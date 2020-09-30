@@ -17,4 +17,6 @@ if (( ${+commands[compleat]} )); then
 
     source "$setup"
   fi
+
+  unset prefix setup
 fi

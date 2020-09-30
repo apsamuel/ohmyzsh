@@ -102,6 +102,4 @@ alias drwse="drush watchdog:show --extended"
 alias drwst="drush watchdog:tail"
 
 # Enable drush autocomplete support
-autoload bashcompinit
-bashcompinit
 source $(dirname $0)/drush.complete.sh

@@ -943,6 +943,64 @@ function _omz::version {
   )
 }
 
+function _omz::theme {
+    (( $# > 0 && $+functions[_omz::theme::$1] )) || {
+        cat <<EOF
+Usage: omz theme <command> [options]
+
+Available commands:
+
+    list            List all available Oh My Zsh themes
+    use <theme>     Load an Oh My Zsh theme
+
+EOF
+        return 1
+    }
+
+    local command="$1"
+    shift
+
+    _omz::theme::$command "$@"
+}
+
+function _omz::theme::list {
+    local -a custom_themes builtin_themes
+    custom_themes=("$ZSH_CUSTOM"/**/*.zsh-theme(.N:r:gs:"$ZSH_CUSTOM"/themes/:::gs:"$ZSH_CUSTOM"/:::))
+    builtin_themes=("$ZSH"/themes/*.zsh-theme(.N:t:r))
+
+    (( ${#custom_themes} )) && {
+        print -Pn "%U%BCustom themes%b%u: "
+        print -l ${(q-)custom_themes}
+    } | fmt -w $COLUMNS
+
+    (( ${#builtin_themes} )) && {
+        # add a line of separation
+        (( ${#custom_themes} )) && echo
+
+        print -Pn "%U%BBuilt-in themes%b%u: "
+        print -l ${(q-)builtin_themes}
+    } | fmt -w $COLUMNS
+}
+
+function _omz::theme::use {
+    if [[ -z "$1" ]]; then
+        echo >&2 "Usage: omz theme use <theme>"
+        return 1
+    fi
+
+    # Respect compatibility with old lookup order
+    if [[ -f "$ZSH_CUSTOM/$1.zsh-theme" ]]; then
+        source "$ZSH_CUSTOM/$1.zsh-theme"
+    elif [[ -f "$ZSH_CUSTOM/themes/$1.zsh-theme" ]]; then
+        source "$ZSH_CUSTOM/themes/$1.zsh-theme"
+    elif [[ -f "$ZSH/themes/$1.zsh-theme" ]]; then
+        source "$ZSH/themes/$1.zsh-theme"
+    else
+        _omz::log error "theme '$1' not found"
+        return 1
+    fi
+}
+
 function _omz::update {
     # Run update script
     env ZSH="$ZSH" sh "$ZSH/tools/upgrade.sh"

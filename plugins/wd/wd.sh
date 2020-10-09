@@ -439,7 +439,7 @@ wd_ls()
 wd_path()
 {
     wd_getdir "$1"
-    echo "$(echo "$dir" | sed "s:${HOME}:~:g")"
+    echo "$(echo "$dir" | sed "s:~:${HOME}:g")"
 }
 
 wd_show()

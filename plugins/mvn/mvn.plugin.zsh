@@ -88,7 +88,7 @@ alias mvn-updates='mvn versions:display-dependency-updates'
 
 function listMavenCompletions {
 	local file new_file
-	local -a profiles POM_FILES
+	local -a profiles POM_FILES modules
 
 	# Root POM
 	POM_FILES=(~/.m2/settings.xml)

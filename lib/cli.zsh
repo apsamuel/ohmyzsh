@@ -968,6 +968,12 @@ function _omz::theme::list {
     custom_themes=("$ZSH_CUSTOM"/**/*.zsh-theme(.N:r:gs:"$ZSH_CUSTOM"/themes/:::gs:"$ZSH_CUSTOM"/:::))
     builtin_themes=("$ZSH"/themes/*.zsh-theme(.N:t:r))
 
+    # If the command is being piped, print all found line by line
+    if [[ ! -t 1 ]]; then
+        print -l ${(q-)custom_themes} ${(q-)builtin_themes}
+        return
+    fi
+
     if (( ${#custom_themes} )); then
         print -P "%U%BCustom themes%b%u:"
         print -l ${(q-)custom_themes} | column

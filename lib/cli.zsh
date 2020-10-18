@@ -968,20 +968,17 @@ function _omz::theme::list {
     custom_themes=("$ZSH_CUSTOM"/**/*.zsh-theme(.N:r:gs:"$ZSH_CUSTOM"/themes/:::gs:"$ZSH_CUSTOM"/:::))
     builtin_themes=("$ZSH"/themes/*.zsh-theme(.N:t:r))
 
-    {
-        (( ${#custom_themes} )) && {
-            print -Pn "%U%BCustom themes%b%u: "
-            print -l ${(q-)custom_themes}
-        }
+    if (( ${#custom_themes} )); then
+        print -P "%U%BCustom themes%b%u:"
+        print -l ${(q-)custom_themes} | column
+    fi
 
-        (( ${#builtin_themes} )) && {
-            # add a line of separation
-            (( ${#custom_themes} )) && echo
+    if (( ${#builtin_themes} )); then
+        (( ${#custom_themes} )) && echo # add a line of separation
 
-            print -Pn "%U%BBuilt-in themes%b%u: "
-            print -l ${(q-)builtin_themes}
-        }
-    } | fmt -w $COLUMNS | sed -E $'s/\e?(\\[[0-9]*m)/\e\\1/g' # deal with fmt removing ESC
+        print -P "%U%BBuilt-in themes%b%u:"
+        print -l ${(q-)builtin_themes} | column
+    fi
 }
 
 function _omz::theme::use {

@@ -4,7 +4,7 @@ This plugin provides completion support for [awscli v2](https://awscli.amazonaws
 and a few utilities to manage AWS profiles/regions and display them in the prompt.
 [awscli v1](https://docs.aws.amazon.com/cli/latest/userguide/cliv2-migration.html) is no longer supported.
 
-To use it, add `aws` to the plugins array in your zshrc file.
+To use it, make sure [jq](https://stedolan.github.io/jq/download/) is installed, and add `aws` to the plugins array in your zshrc file.
 
 ```zsh
 plugins=(... aws)

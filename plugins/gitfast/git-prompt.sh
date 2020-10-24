@@ -70,6 +70,15 @@
 # state symbols by setting GIT_PS1_STATESEPARATOR. The default separator
 # is SP.
 #
+# When there is an in-progress operation such as a merge, rebase,
+# revert, cherry-pick, or bisect, the prompt will include information
+# related to the operation, often in the form "|<OPERATION-NAME>".
+#
+# When the repository has a sparse-checkout, a notification of the form
+# "|SPARSE" will be included in the prompt.  This can be shortened to a
+# single '?' character by setting GIT_PS1_COMPRESSSPARSESTATE, or omitted
+# by setting GIT_PS1_OMITSPARSESTATE.
+#
 # By default, __git_ps1 will compare HEAD to your SVN upstream if it can
 # find one, or @{upstream} otherwise.  Once you have set
 # GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
@@ -346,6 +355,37 @@ __git_sequencer_status ()
 __git_eread ()
 {
 	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
+}
+
+# see if a cherry-pick or revert is in progress, if the user has committed a
+# conflict resolution with 'git commit' in the middle of a sequence of picks or
+# reverts then CHERRY_PICK_HEAD/REVERT_HEAD will not exist so we have to read
+# the todo file.
+__git_sequencer_status ()
+{
+	local todo
+	if test -f "$g/CHERRY_PICK_HEAD"
+	then
+		r="|CHERRY-PICKING"
+		return 0;
+	elif test -f "$g/REVERT_HEAD"
+	then
+		r="|REVERTING"
+		return 0;
+	elif __git_eread "$g/sequencer/todo" todo
+	then
+		case "$todo" in
+		p[\ \	]|pick[\ \	]*)
+			r="|CHERRY-PICKING"
+			return 0
+		;;
+		revert[\ \	]*)
+			r="|REVERTING"
+			return 0
+		;;
+		esac
+	fi
+	return 1
 }
 
 # __git_ps1 accepts 0 or 1 arguments (i.e., format string)

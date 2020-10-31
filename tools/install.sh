@@ -244,8 +244,12 @@ fmt_error() {
   printf '%sError: %s%s\n' "${FMT_BOLD}${FMT_RED}" "$*" "$FMT_RESET" >&2
 }
 
-underline() {
-	echo "$(printf '\033[4m')$@$(printf '\033[24m')"
+fmt_underline() {
+  echo "$(printf '\033[4m')$@$(printf '\033[24m')"
+}
+
+fmt_code() {
+  echo "\`$(printf '\033[38;5;247m')$@${RESET}\`"
 }
 
 setup_color() {
@@ -317,29 +321,29 @@ setup_ohmyzsh() {
     exit 1
   }
 
-	echo "${BLUE}Cloning Oh My Zsh...${RESET}"
+  echo "${BLUE}Cloning Oh My Zsh...${RESET}"
 
-	command_exists git || {
-		error "git is not installed"
-		exit 1
-	}
+  command_exists git || {
+    fmt_error "git is not installed"
+    exit 1
+  }
 
-	if [ "$OSTYPE" = cygwin ] && git --version | grep -q msysgit; then
-		error "Windows/MSYS Git is not supported on Cygwin"
-		error "Make sure the Cygwin git package is installed and is first on the \$PATH"
-		exit 1
-	fi
+  if [ "$OSTYPE" = cygwin ] && git --version | grep -q msysgit; then
+    fmt_error "Windows/MSYS Git is not supported on Cygwin"
+    fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
+    exit 1
+  fi
 
-	git clone -c core.eol=lf -c core.autocrlf=false \
-		-c fsck.zeroPaddedFilemode=ignore \
-		-c fetch.fsck.zeroPaddedFilemode=ignore \
-		-c receive.fsck.zeroPaddedFilemode=ignore \
-		--depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
-		error "git clone of oh-my-zsh repo failed"
-		exit 1
-	}
+  git clone -c core.eol=lf -c core.autocrlf=false \
+    -c fsck.zeroPaddedFilemode=ignore \
+    -c fetch.fsck.zeroPaddedFilemode=ignore \
+    -c receive.fsck.zeroPaddedFilemode=ignore \
+    --depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
+    fmt_error "git clone of oh-my-zsh repo failed"
+    exit 1
+  }
 
-	echo
+  echo
 }
 
   # Manual clone with git config options to support git < v1.7.2

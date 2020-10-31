@@ -162,7 +162,7 @@ function handle_update() {
   () {
     emulate -L zsh
 
-    local epoch_target mtime option LAST_EPOCH
+  local epoch_target mtime option LAST_EPOCH
 
     # Remove lock directory if older than a day
     zmodload zsh/datetime
@@ -172,6 +172,7 @@ function handle_update() {
         command rm -rf "$ZSH/log/update.lock"
       fi
     fi
+  fi
 
     # Check for lock directory
     if ! command mkdir "$ZSH/log/update.lock" 2>/dev/null; then

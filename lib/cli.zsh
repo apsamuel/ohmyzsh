@@ -944,74 +944,80 @@ function _omz::version {
 }
 
 function _omz::theme {
-    (( $# > 0 && $+functions[_omz::theme::$1] )) || {
-        cat <<EOF
+  (( $# > 0 && $+functions[_omz::theme::$1] )) || {
+    cat <<EOF
 Usage: omz theme <command> [options]
 
 Available commands:
 
-    list            List all available Oh My Zsh themes
-    use <theme>     Load an Oh My Zsh theme
+  list            List all available Oh My Zsh themes
+  use <theme>     Load an Oh My Zsh theme
 
 EOF
-        return 1
-    }
+    return 1
+  }
 
-    local command="$1"
-    shift
+  local command="$1"
+  shift
 
-    _omz::theme::$command "$@"
+  _omz::theme::$command "$@"
 }
 
 function _omz::theme::list {
-    local -a custom_themes builtin_themes
-    custom_themes=("$ZSH_CUSTOM"/**/*.zsh-theme(.N:r:gs:"$ZSH_CUSTOM"/themes/:::gs:"$ZSH_CUSTOM"/:::))
-    builtin_themes=("$ZSH"/themes/*.zsh-theme(.N:t:r))
+  local -a custom_themes builtin_themes
+  custom_themes=("$ZSH_CUSTOM"/**/*.zsh-theme(.N:r:gs:"$ZSH_CUSTOM"/themes/:::gs:"$ZSH_CUSTOM"/:::))
+  builtin_themes=("$ZSH"/themes/*.zsh-theme(.N:t:r))
 
-    # If the command is being piped, print all found line by line
-    if [[ ! -t 1 ]]; then
-        print -l ${(q-)custom_themes} ${(q-)builtin_themes}
-        return
-    fi
+  # If the command is being piped, print all found line by line
+  if [[ ! -t 1 ]]; then
+    print -l ${(q-)custom_themes} ${(q-)builtin_themes}
+    return
+  fi
 
-    if (( ${#custom_themes} )); then
-        print -P "%U%BCustom themes%b%u:"
-        print -l ${(q-)custom_themes} | column
-    fi
+  if (( ${#custom_themes} )); then
+    print -P "%U%BCustom themes%b%u:"
+    print -l ${(q-)custom_themes} | column
+  fi
 
-    if (( ${#builtin_themes} )); then
-        (( ${#custom_themes} )) && echo # add a line of separation
+  if (( ${#builtin_themes} )); then
+    (( ${#custom_themes} )) && echo # add a line of separation
 
-        print -P "%U%BBuilt-in themes%b%u:"
-        print -l ${(q-)builtin_themes} | column
-    fi
+    print -P "%U%BBuilt-in themes%b%u:"
+    print -l ${(q-)builtin_themes} | column
+  fi
 }
 
 function _omz::theme::use {
-    if [[ -z "$1" ]]; then
-        echo >&2 "Usage: omz theme use <theme>"
-        return 1
-    fi
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz theme use <theme>"
+    return 1
+  fi
 
-    # Respect compatibility with old lookup order
-    if [[ -f "$ZSH_CUSTOM/$1.zsh-theme" ]]; then
-        source "$ZSH_CUSTOM/$1.zsh-theme"
-    elif [[ -f "$ZSH_CUSTOM/themes/$1.zsh-theme" ]]; then
-        source "$ZSH_CUSTOM/themes/$1.zsh-theme"
-    elif [[ -f "$ZSH/themes/$1.zsh-theme" ]]; then
-        source "$ZSH/themes/$1.zsh-theme"
-    else
-        _omz::log error "theme '$1' not found"
-        return 1
-    fi
+  # Respect compatibility with old lookup order
+  if [[ -f "$ZSH_CUSTOM/$1.zsh-theme" ]]; then
+    source "$ZSH_CUSTOM/$1.zsh-theme"
+  elif [[ -f "$ZSH_CUSTOM/themes/$1.zsh-theme" ]]; then
+    source "$ZSH_CUSTOM/themes/$1.zsh-theme"
+  elif [[ -f "$ZSH/themes/$1.zsh-theme" ]]; then
+    source "$ZSH/themes/$1.zsh-theme"
+  else
+    _omz::log error "theme '$1' not found"
+    return 1
+  fi
 }
 
 function _omz::update {
-    # Run update script
-    env ZSH="$ZSH" zsh -f "$ZSH/tools/upgrade.sh"
-    # Update last updated file
-    zmodload zsh/datetime
-    echo "LAST_EPOCH=$(( EPOCHSECONDS / 60 / 60 / 24 ))" >! "${ZSH_CACHE_DIR}/.zsh-update"
-    # Remove update lock if it exists
-    command rm -rf "$ZSH/log/update.lock"
+  # Run update script
+  env ZSH="$ZSH" zsh -f "$ZSH/tools/upgrade.sh"
+  local ret=$?
+  # Update last updated file
+  zmodload zsh/datetime
+  echo "LAST_EPOCH=$(( EPOCHSECONDS / 60 / 60 / 24 ))" >! "${ZSH_CACHE_DIR}/.zsh-update"
+  # Remove update lock if it exists
+  command rm -rf "$ZSH/log/update.lock"
+  # Restart the zsh session
+  if [[ $ret -eq 0 ]]; then
+    # Check whether to run a login shell
+    [[ "$ZSH_ARGZERO" = -* ]] && exec -l "${ZSH_ARGZERO#-}" || exec "$ZSH_ARGZERO"
+  fi
 }

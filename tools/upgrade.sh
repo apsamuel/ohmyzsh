@@ -18,6 +18,10 @@ if [[ -z "$ZSH" ]]; then
   ZSH="${0:a:h:h}"
 fi
 
+if [ -z "$ZSH_VERSION" ]; then
+  exec zsh "$0"
+fi
+
 cd "$ZSH"
 
 verbose_mode="default"

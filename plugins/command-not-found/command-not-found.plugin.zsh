@@ -83,7 +83,7 @@ fi
 
 # NixOS command-not-found support
 if [ -x /run/current-system/sw/bin/command-not-found ]; then
-    command_not_found_handler () {
+    command_not_found_handler() {
         /run/current-system/sw/bin/command-not-found $@
     }
 fi

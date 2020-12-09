@@ -51,6 +51,8 @@ plugins=(... common-aliases)
 
 \* Only if the [`fd`](https://github.com/sharkdp/fd) command isn't installed.
 
+\* Only if the [`fd`](https://github.com/sharkdp/fd) command isn't installed.
+
 ### Other Aliases
 
 | Alias    | Command            | Description                                                 |

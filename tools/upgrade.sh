@@ -264,6 +264,8 @@ if LANG= git pull --quiet --rebase $remote $branch; then
     if [[ $verbose_mode != silent ]]; then
       printf "${BLUE}%s \`${BOLD}%s${RESET}${BLUE}\`${RESET}\n" "You can see the changelog with" "omz changelog"
     fi
+
+    printf "${BLUE}%s \`${BOLD}%s${RESET}${BLUE}\`${RESET}\n" "You can see the changelog again with" "omz changelog"
   fi
 
   if [[ $verbose_mode == default ]]; then

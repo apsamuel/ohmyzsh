@@ -76,13 +76,20 @@ function zle-keymap-select() {
 }
 zle -N zle-keymap-select
 
-function vi-accept-line() {
-  VI_KEYMAP=main
-  zle accept-line
+# These "echoti" statements were originally set in lib/key-bindings.zsh
+# Not sure the best way to extend without overriding.
+function zle-line-init() {
+  typeset -g VI_KEYMAP=main
+  (( ! ${+terminfo[smkx]} )) || echoti smkx
+  _vi-mode-set-cursor-shape-for-keymap "${VI_KEYMAP}"
 }
+zle -N zle-line-init
 
-zle -N vi-accept-line
-
+function zle-line-finish() {
+  (( ! ${+terminfo[rmkx]} )) || echoti rmkx
+  _vi-mode-set-cursor-shape-for-keymap default
+}
+zle -N zle-line-finish
 
 # These "echoti" statements were originally set in lib/key-bindings.zsh
 # Not sure the best way to extend without overriding.

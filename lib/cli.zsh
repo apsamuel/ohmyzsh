@@ -453,6 +453,29 @@ function _omz::plugin::info {
   return 1
 }
 
+function _omz::plugin::info {
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz plugin info <plugin>"
+    return 1
+  fi
+
+  local readme
+  for readme in "$ZSH_CUSTOM/plugins/$1/README.md" "$ZSH/plugins/$1/README.md"; do
+    if [[ -f "$readme" ]]; then
+      (( ${+commands[less]} )) && less "$readme" || cat "$readme"
+      return 0
+    fi
+  done
+
+  if [[ -d "$ZSH_CUSTOM/plugins/$1" || -d "$ZSH/plugins/$1" ]]; then
+    _omz::log error "the '$1' plugin doesn't have a README file"
+  else
+    _omz::log error "'$1' plugin not found"
+  fi
+
+  return 1
+}
+
 function _omz::plugin::list {
   local -a custom_plugins builtin_plugins
 

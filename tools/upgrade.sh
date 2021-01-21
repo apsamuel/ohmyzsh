@@ -19,7 +19,7 @@ if [[ -z "$ZSH" ]]; then
 fi
 
 if [ -z "$ZSH_VERSION" ]; then
-  exec zsh "$0"
+  exec zsh "$0" "$@"
 fi
 
 cd "$ZSH"

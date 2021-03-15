@@ -245,11 +245,12 @@ fmt_error() {
 }
 
 fmt_underline() {
-  echo "$(printf '\033[4m')$@$(printf '\033[24m')"
+  printf '\033[4m%s\033[24m\n' "$*"
 }
 
 fmt_code() {
-  echo "\`$(printf '\033[38;5;247m')$@${RESET}\`"
+  # shellcheck disable=SC2016 # backtic in single-quote
+  printf '`\033[38;5;247m%s%s`\n' "$*" "$RESET"
 }
 
 setup_color() {
@@ -328,7 +329,8 @@ setup_ohmyzsh() {
     exit 1
   }
 
-  if [ "$OSTYPE" = cygwin ] && git --version | grep -q msysgit; then
+  ostype=$(uname)
+  if [ -z "${ostype%CYGWIN*}" ] && git --version | grep -q msysgit; then
     fmt_error "Windows/MSYS Git is not supported on Cygwin"
     fmt_error "Make sure the Cygwin git package is installed and is first on the \$PATH"
     exit 1

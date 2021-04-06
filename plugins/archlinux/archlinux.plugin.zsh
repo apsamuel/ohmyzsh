@@ -281,11 +281,7 @@ function upgrade() {
   fi
 }
 
-function pacmanallkeys() {
-  curl -sL https://www.archlinux.org/people/{developers,trusted-users}/ | \
-    awk -F\" '(/keyserver.ubuntu.com/) { sub(/.*search=0x/,""); print $1}' | \
-    xargs sudo pacman-key --recv-keys
-}
+alias pacmanallkeys='sudo pacman-key --refresh-keys'
 
 function pacmansignkeys() {
   local key
@@ -299,6 +295,15 @@ function pacmansignkeys() {
 
 if (( $+commands[xdg-open] )); then
   function pacweb() {
+    if [[ $# = 0 || "$1" =~ '--help|-h' ]]; then
+      local underline_color="\e[${color[underline]}m"
+      echo "$0 - open the website of an ArchLinux package"
+      echo
+      echo "Usage:"
+      echo "    $bold_color$0$reset_color ${underline_color}target${reset_color}"
+      return 1
+    fi
+
     local pkg="$1"
     local infos="$(LANG=C pacman -Si "$pkg")"
     if [[ -z "$infos" ]]; then
@@ -309,3 +314,88 @@ if (( $+commands[xdg-open] )); then
     xdg-open "https://www.archlinux.org/packages/$repo/$arch/$pkg/" &>/dev/null
   }
 fi
+
+#######################################
+#             AUR helpers             #
+#######################################
+
+if (( $+commands[pacaur] )); then
+  alias paupg='pacaur -Syu'
+  alias pasu='pacaur -Syu --noconfirm'
+  alias pain='pacaur -S'
+  alias pains='pacaur -U'
+  alias pare='pacaur -R'
+  alias parem='pacaur -Rns'
+  alias parep='pacaur -Si'
+  alias pareps='pacaur -Ss'
+  alias paloc='pacaur -Qi'
+  alias palocs='pacaur -Qs'
+  alias palst='pacaur -Qe'
+  alias paorph='pacaur -Qtd'
+  alias painsd='pacaur -S --asdeps'
+  alias pamir='pacaur -Syy'
+  alias paupd="pacaur -Sy$abs_aur"
+  alias upgrade='pacaur -Syu'
+fi
+
+if (( $+commands[trizen] )); then
+  alias trconf='trizen -C'
+  alias trupg='trizen -Syua'
+  alias trsu='trizen -Syua --noconfirm'
+  alias trin='trizen -S'
+  alias trins='trizen -U'
+  alias trre='trizen -R'
+  alias trrem='trizen -Rns'
+  alias trrep='trizen -Si'
+  alias trreps='trizen -Ss'
+  alias trloc='trizen -Qi'
+  alias trlocs='trizen -Qs'
+  alias trlst='trizen -Qe'
+  alias trorph='trizen -Qtd'
+  alias trinsd='trizen -S --asdeps'
+  alias trmir='trizen -Syy'
+  alias trupd="trizen -Sy$abs_aur"
+  alias upgrade='trizen -Syu'
+fi
+
+if (( $+commands[yaourt] )); then
+  alias yaconf='yaourt -C'
+  alias yaupg='yaourt -Syua'
+  alias yasu='yaourt -Syua --noconfirm'
+  alias yain='yaourt -S'
+  alias yains='yaourt -U'
+  alias yare='yaourt -R'
+  alias yarem='yaourt -Rns'
+  alias yarep='yaourt -Si'
+  alias yareps='yaourt -Ss'
+  alias yaloc='yaourt -Qi'
+  alias yalocs='yaourt -Qs'
+  alias yalst='yaourt -Qe'
+  alias yaorph='yaourt -Qtd'
+  alias yainsd='yaourt -S --asdeps'
+  alias yamir='yaourt -Syy'
+  alias yaupd="yaourt -Sy$abs_aur"
+  alias upgrade='yaourt -Syu'
+fi
+
+if (( $+commands[yay] )); then
+  alias yaconf='yay -Pg'
+  alias yaupg='yay -Syu'
+  alias yasu='yay -Syu --noconfirm'
+  alias yain='yay -S'
+  alias yains='yay -U'
+  alias yare='yay -R'
+  alias yarem='yay -Rns'
+  alias yarep='yay -Si'
+  alias yareps='yay -Ss'
+  alias yaloc='yay -Qi'
+  alias yalocs='yay -Qs'
+  alias yalst='yay -Qe'
+  alias yaorph='yay -Qtd'
+  alias yainsd='yay -S --asdeps'
+  alias yamir='yay -Syy'
+  alias yaupd="yay -Sy$abs_aur"
+  alias upgrade='yay -Syu'
+fi
+
+unset abs_aur

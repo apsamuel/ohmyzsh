@@ -27,6 +27,14 @@ you would make is not already covered.
   - [Style](#style)
 - [Volunteer](#volunteer)
 
+- [Reporting Issues](#reporting-issues)
+  - [You have a problem](#you-have-a-problem)
+  - [You have a suggestion](#you-have-a-suggestion)
+- [Submitting Pull Requests](#submitting-pull-requests)
+  - [Getting started](#getting-started)
+  - [You have a solution](#you-have-a-solution)
+  - [You have an addition](#you-have-an-addition)
+- [Use the Se
 <!-- /TOC -->
 
 ## Reporting Issues

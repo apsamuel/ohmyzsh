@@ -75,18 +75,9 @@ if [[ -x /usr/bin/command-not-found ]]; then
   }
 fi
 
-# macOS command-not-found support
-# https://github.com/Homebrew/homebrew-command-not-found
-HB_CNF_HANDLER_SUFFIX="Library/Taps/homebrew/homebrew-command-not-found/handler.sh"
-if [[ -s "/opt/homebrew/$HB_CNF_HANDLER_SUFFIX" ]]; then
-      source "/opt/homebrew/$HB_CNF_HANDLER_SUFFIX"
-elif [[ -s "/usr/local/Homebrew/$HB_CNF_HANDLER_SUFFIX" ]]; then
-      source "/usr/local/Homebrew/$HB_CNF_HANDLER_SUFFIX"
-fi
-
-# NixOS command-not-found support
-if [ -x /run/current-system/sw/bin/command-not-found ]; then
-    command_not_found_handler() {
-        /run/current-system/sw/bin/command-not-found $@
-    }
+# NixOS: https://github.com/NixOS/nixpkgs/tree/master/nixos/modules/programs/command-not-found
+if [[ -x /run/current-system/sw/bin/command-not-found ]]; then
+  command_not_found_handler() {
+    /run/current-system/sw/bin/command-not-found -- "$@"
+  }
 fi

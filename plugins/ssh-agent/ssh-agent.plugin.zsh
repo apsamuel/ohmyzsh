@@ -117,3 +117,5 @@ fi
 
 unset agent_forwarding ssh_env_cache
 unfunction _start_agent _add_identities
+
+rm -rf "$lockdir"

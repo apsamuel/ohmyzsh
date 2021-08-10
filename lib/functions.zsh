@@ -107,6 +107,13 @@ function open_command() {
   ${=open_cmd} "$@" &>/dev/null
 }
 
+# take functions
+
+# mkcd is equivalent to takedir
+function mkcd takedir() {
+  mkdir -p $@ && cd ${@:$#}
+}
+
 function takeurl() {
   data=$(mktemp)
   curl -L $1 > $data

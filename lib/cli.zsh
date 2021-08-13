@@ -561,6 +561,56 @@ function _omz::plugin::load {
   fi
 }
 
+function _omz::plugin::load {
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz plugin load <plugin> [...]"
+    return 1
+  fi
+
+  local plugins=("$@")
+  local plugin base has_completion=0
+
+  for plugin in $plugins; do
+    if [[ -d "$ZSH_CUSTOM/plugins/$plugin" ]]; then
+      base="$ZSH_CUSTOM/plugins/$plugin"
+    elif [[ -d "$ZSH/plugins/$plugin" ]]; then
+      base="$ZSH/plugins/$plugin"
+    else
+      _omz::log warn "plugin '$plugin' not found"
+      continue
+    fi
+
+    # Check if its a valid plugin
+    if [[ ! -f "$base/_$plugin" && ! -f "$base/$plugin.plugin.zsh" ]]; then
+      _omz::log warn "'$plugin' is not a valid plugin"
+      continue
+    # It it is a valid plugin, add its directory to $fpath unless it is already there
+    elif (( ! ${fpath[(Ie)$base]} )); then
+      fpath=("$base" $fpath)
+    fi
+
+    # Check if it has completion to reload compinit
+    if [[ -f "$base/_$plugin" ]]; then
+      has_completion=1
+    fi
+
+    # Load the plugin
+    if [[ -f "$base/$plugin.plugin.zsh" ]]; then
+      source "$base/$plugin.plugin.zsh"
+    fi
+  done
+
+  # If we have completion, we need to reload the completion
+  # We pass -D to avoid generating a new dump file, which would overwrite our
+  # current one for the next session (and we don't want that because we're not
+  # actually enabling the plugins for the next session).
+  # Note that we still have to pass -d "$_comp_dumpfile", so that compinit
+  # doesn't use the default zcompdump location (${ZDOTDIR:-$HOME}/.zcompdump).
+  if (( has_completion )); then
+    compinit -D -d "$_comp_dumpfile"
+  fi
+}
+
 function _omz::pr {
   (( $# > 0 && $+functions[$0::$1] )) || {
     cat >&2 <<EOF

@@ -22,6 +22,9 @@ plugins=(... dirhistory)
 > NOTE: some terminals might override the <kbd>Alt</kbd> + Arrows key bindings (e.g. Windows Terminal).
 > If these don't work check your terminal settings and change them to a different keyboard shortcut.
 
+NOTE: some terminals might override the ALT+Arrows key bindings (Windows Terminal, for example).
+If these don't work check your terminal settings and change them to a different keyboard shortcut.
+
 ## Usage
 
 This plugin allows you to navigate the history of previous working directories using <kbd>Alt</kbd> + <kbd>Left</kbd>

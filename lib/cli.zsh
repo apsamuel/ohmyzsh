@@ -1213,14 +1213,14 @@ function _omz::theme::list {
 
   if (( ${#custom_themes} )); then
     print -P "%U%BCustom themes%b%u:"
-    print -l ${(q-)custom_themes} | column
+    print -l ${(q-)custom_themes} | column -x
   fi
 
   if (( ${#builtin_themes} )); then
     (( ${#custom_themes} )) && echo # add a line of separation
 
     print -P "%U%BBuilt-in themes%b%u:"
-    print -l ${(q-)builtin_themes} | column
+    print -l ${(q-)builtin_themes} | column -x
   fi
 }
 

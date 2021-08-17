@@ -453,6 +453,172 @@ function _omz::plugin::info {
   return 1
 }
 
+function _omz::plugin::disable {
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz plugin disable <plugin> [...]"
+    return 1
+  fi
+
+  # Check that plugin is in $plugins
+  local -a dis_plugins=()
+  for plugin in "$@"; do
+    if [[ ${plugins[(Ie)$plugin]} -eq 0 ]]; then
+      _omz::log warn "plugin '$plugin' is not enabled."
+      continue
+    fi
+    dis_plugins+=("$plugin")
+  done
+
+  # Exit if there are no enabled plugins to disable
+  if [[ ${#dis_plugins} -eq 0 ]]; then
+    return 1
+  fi
+
+  # Disable plugins awk script
+  local awk_script="
+# if plugins=() is in oneline form, substitute disabled plugins and go to next line
+/^\s*plugins=\([^#]+\).*\$/ {
+  sub(/\s+(${(j:|:)dis_plugins})/, \"\") # with spaces before
+  sub(/(${(j:|:)dis_plugins})\s+/, \"\") # with spaces after
+  sub(/\((${(j:|:)dis_plugins})\)/, \"\") # without spaces (only plugin)
+  print \$0
+  next
+}
+
+# if plugins=() is in multiline form, enable multi flag and disable plugins if they're there
+/^\s*plugins=\(/ {
+  multi=1
+  sub(/\s+(${(j:|:)dis_plugins})/, \"\")
+  sub(/(${(j:|:)dis_plugins})\s+/, \"\")
+  sub(/\((${(j:|:)dis_plugins})\)/, \"\")
+  print \$0
+  next
+}
+
+# if multi flag is enabled and we find a valid closing parenthesis,
+# add new plugins and disable multi flag
+multi == 1 && /^[^#]*\)/ {
+  multi=0
+  sub(/\s+(${(j:|:)dis_plugins})/, \"\")
+  sub(/(${(j:|:)dis_plugins})\s+/, \"\")
+  sub(/\((${(j:|:)dis_plugins})\)/, \"\")
+  print \$0
+  next
+}
+
+multi == 1 {
+  sub(/\s+(${(j:|:)dis_plugins})/, \"\")
+  sub(/(${(j:|:)dis_plugins})\s+/, \"\")
+  sub(/\((${(j:|:)dis_plugins})\)/, \"\")
+  print \$0
+  next
+}
+
+{ print \$0 }
+"
+
+  awk "$awk_script" ~/.zshrc > ~/.zshrc.disabled \
+  && mv ~/.zshrc ~/.zshrc.swp \
+  && mv ~/.zshrc.disabled ~/.zshrc
+
+  # Exit if the new .zshrc file wasn't created correctly
+  [[ $? -eq 0 ]] || {
+    local ret=$?
+    _omz::log error "error disabling plugins."
+    return $ret
+  }
+
+  # Exit if the new .zshrc file has syntax errors
+  if ! zsh -n ~/.zshrc; then
+    _omz::log error "broken syntax in ~/.zshrc. Rolling back changes..."
+    mv ~/.zshrc ~/.zshrc.disabled
+    mv ~/.zshrc.swp ~/.zshrc
+    return 1
+  fi
+
+  # Restart the zsh session if there were no errors
+  _omz::log info ""
+
+  # Old zsh versions don't have ZSH_ARGZERO
+  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
+  # Check whether to run a login shell
+  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+}
+
+function _omz::plugin::enable {
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz plugin enable <plugin> [...]"
+    return 1
+  fi
+
+  # Check that plugin is not in $plugins
+  local -a add_plugins=()
+  for plugin in "$@"; do
+    if [[ ${plugins[(Ie)$plugin]} -ne 0 ]]; then
+      _omz::log warn "plugin '$plugin' is already enabled."
+      continue
+    fi
+    add_plugins+=("$plugin")
+  done
+
+  # Exit if there are no plugins to enable
+  if [[ ${#add_plugins} -eq 0 ]]; then
+    return 1
+  fi
+
+  # Enable plugins awk script
+  local awk_script="
+# if plugins=() is in oneline form, substitute ) with new plugins and go to the next line
+/^\s*plugins=\([^#]+\).*\$/ {
+  sub(/\)/, \" $add_plugins&\")
+  print \$0
+  next
+}
+
+# if plugins=() is in multiline form, enable multi flag
+/^\s*plugins=\(/ {
+  multi=1
+}
+
+# if multi flag is enabled and we find a valid closing parenthesis,
+# add new plugins and disable multi flag
+multi == 1 && /^[^#]*\)/ {
+  multi=0
+  sub(/\)/, \" $add_plugins&\")
+  print \$0
+  next
+}
+
+{ print \$0 }
+"
+
+  awk "$awk_script" ~/.zshrc > ~/.zshrc.disabled \
+  && mv ~/.zshrc ~/.zshrc.swp \
+  && mv ~/.zshrc.disabled ~/.zshrc
+
+  # Exit if the new .zshrc file wasn't created correctly
+  [[ $? -eq 0 ]] || {
+    local ret=$?
+    _omz::log error "error disabling plugins."
+    return $ret
+  }
+
+  # Exit if the new .zshrc file has syntax errors
+  if ! zsh -n ~/.zshrc; then
+    _omz::log error "broken syntax in ~/.zshrc. Rolling back changes..."
+    mv ~/.zshrc ~/.zshrc.disabled
+    mv ~/.zshrc.swp ~/.zshrc
+    return 1
+  fi
+
+  # Restart the zsh session if there were no errors
+
+  # Old zsh versions don't have ZSH_ARGZERO
+  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
+  # Check whether to run a login shell
+  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+}
+
 function _omz::plugin::info {
   if [[ -z "$1" ]]; then
     echo >&2 "Usage: omz plugin info <plugin>"

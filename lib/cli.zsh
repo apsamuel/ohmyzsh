@@ -514,9 +514,9 @@ multi == 1 && length(\$0) > 0 {
 { print \$0 }
 "
 
-  awk "$awk_script" ~/.zshrc > ~/.zshrc.disabled \
-  && mv ~/.zshrc ~/.zshrc.swp \
-  && mv ~/.zshrc.disabled ~/.zshrc
+  awk "$awk_script" ~/.zshrc > ~/.zshrc.new \
+  && command mv -f ~/.zshrc ~/.zshrc.bck \
+  && command mv -f ~/.zshrc.new ~/.zshrc
 
   # Exit if the new .zshrc file wasn't created correctly
   [[ $? -eq 0 ]] || {
@@ -528,8 +528,8 @@ multi == 1 && length(\$0) > 0 {
   # Exit if the new .zshrc file has syntax errors
   if ! zsh -n ~/.zshrc; then
     _omz::log error "broken syntax in ~/.zshrc. Rolling back changes..."
-    command mv -f ~/.zshrc ~/.zshrc.disabled
-    command mv -f ~/.zshrc.swp ~/.zshrc
+    command mv -f ~/.zshrc ~/.zshrc.new
+    command mv -f ~/.zshrc.bck ~/.zshrc
     return 1
   fi
 
@@ -589,9 +589,9 @@ multi == 1 && /^[^#]*\)/ {
 { print \$0 }
 "
 
-  awk "$awk_script" ~/.zshrc > ~/.zshrc.enabled \
-  && command mv -f ~/.zshrc ~/.zshrc.swp \
-  && command mv -f ~/.zshrc.enabled ~/.zshrc
+  awk "$awk_script" ~/.zshrc > ~/.zshrc.new \
+  && command mv -f ~/.zshrc ~/.zshrc.bck \
+  && command mv -f ~/.zshrc.new ~/.zshrc
 
   # Exit if the new .zshrc file wasn't created correctly
   [[ $? -eq 0 ]] || {
@@ -603,8 +603,8 @@ multi == 1 && /^[^#]*\)/ {
   # Exit if the new .zshrc file has syntax errors
   if ! zsh -n ~/.zshrc; then
     _omz::log error "broken syntax in ~/.zshrc. Rolling back changes..."
-    command mv -f ~/.zshrc ~/.zshrc.enabled
-    command mv -f ~/.zshrc.swp ~/.zshrc
+    command mv -f ~/.zshrc ~/.zshrc.new
+    command mv -f ~/.zshrc.bck ~/.zshrc
     return 1
   fi
 
@@ -1188,7 +1188,8 @@ Usage: omz theme <command> [options]
 Available commands:
 
   list            List all available Oh My Zsh themes
-  use <theme>     Load an Oh My Zsh theme
+  set <theme>     Set a theme in your .zshrc file
+  use <theme>     Load a theme
 
 EOF
     return 1
@@ -1224,6 +1225,73 @@ function _omz::theme::list {
   fi
 }
 
+function _omz::theme::set {
+  if [[ -z "$1" ]]; then
+    echo >&2 "Usage: omz theme set <theme>"
+    return 1
+  fi
+
+  # Check that theme exists
+  if [[ ! -f "$ZSH_CUSTOM/$1.zsh-theme" ]] \
+    && [[ ! -f "$ZSH_CUSTOM/themes/$1.zsh-theme" ]] \
+    && [[ ! -f "$ZSH/themes/$1.zsh-theme" ]]; then
+    _omz::log error "%B$1%b theme not found"
+    return 1
+  fi
+
+  # Enable theme in .zshrc
+  local awk_script='
+!set && /^\s*ZSH_THEME=[^#]+.*$/ {
+  set=1
+  sub(/^\s*ZSH_THEME=[^#]+.*$/, "ZSH_THEME=\"'$1'\" # set by `omz`")
+  print $0
+  next
+}
+
+{ print $0 }
+
+END {
+  # If no ZSH_THEME= line was found, return an error
+  if (!set) exit 1
+}
+'
+
+  awk "$awk_script" ~/.zshrc > ~/.zshrc.new \
+  || {
+    # Prepend ZSH_THEME= line to .zshrc if it doesn't exist
+    cat <<EOF
+ZSH_THEME="$1" # set by \`omz\`
+
+EOF
+    cat ~/.zshrc
+  } > ~/.zshrc.new \
+  && command mv -f ~/.zshrc ~/.zshrc.bck \
+  && command mv -f ~/.zshrc.new ~/.zshrc
+
+  # Exit if the new .zshrc file wasn't created correctly
+  [[ $? -eq 0 ]] || {
+    local ret=$?
+    _omz::log error "error setting theme."
+    return $ret
+  }
+
+  # Exit if the new .zshrc file has syntax errors
+  if ! zsh -n ~/.zshrc; then
+    _omz::log error "broken syntax in ~/.zshrc. Rolling back changes..."
+    command mv -f ~/.zshrc ~/.zshrc.new
+    command mv -f ~/.zshrc.bck ~/.zshrc
+    return 1
+  fi
+
+  # Restart the zsh session if there were no errors
+  _omz::log info "'$1' theme set correctly."
+
+  # Old zsh versions don't have ZSH_ARGZERO
+  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
+  # Check whether to run a login shell
+  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+}
+
 function _omz::theme::use {
   if [[ -z "$1" ]]; then
     echo >&2 "Usage: omz theme use <theme>"
@@ -1238,7 +1306,7 @@ function _omz::theme::use {
   elif [[ -f "$ZSH/themes/$1.zsh-theme" ]]; then
     source "$ZSH/themes/$1.zsh-theme"
   else
-    _omz::log error "theme '$1' not found"
+    _omz::log error "%B$1%b theme not found"
     return 1
   fi
 }

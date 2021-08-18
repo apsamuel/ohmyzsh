@@ -1182,7 +1182,7 @@ function _omz::version {
 
 function _omz::theme {
   (( $# > 0 && $+functions[_omz::theme::$1] )) || {
-    cat <<EOF
+    cat >&2 <<EOF
 Usage: omz theme <command> [options]
 
 Available commands:

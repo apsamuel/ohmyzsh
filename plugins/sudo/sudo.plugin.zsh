@@ -54,6 +54,7 @@ sudo-command-line() {
       esac
       return
     fi
+  fi
 
     # Check if the typed command is really an alias to $EDITOR
 

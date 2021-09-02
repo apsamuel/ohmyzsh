@@ -43,14 +43,10 @@ function _frontend_fallback() {
 }
 
 function _frontend_fallback() {
-  local url
-  if [[ "$FRONTEND_SEARCH_FALLBACK" == duckduckgo ]]; then
-    url="https://duckduckgo.com/?sites=$1&q="
-  else
-    url="https://google.com/search?as_sitesearch=$1&as_q="
-  fi
-
-  echo "$url"
+  case "$FRONTEND_SEARCH_FALLBACK" in
+    duckduckgo) echo "https://duckduckgo.com/?sites=$1&q=" ;;
+    *) echo "https://google.com/search?as_sitesearch=$1&as_q=" ;;
+  esac
 }
 
 function frontend() {

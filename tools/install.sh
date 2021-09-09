@@ -87,7 +87,7 @@ OVERWRITE_CONFIRMATION=${OVERWRITE_CONFIRMATION:-yes}
 
 
 command_exists() {
-	command -v "$@" >/dev/null 2>&1
+  command -v "$@" >/dev/null 2>&1
 }
 
 user_can_sudo() {
@@ -249,7 +249,7 @@ fmt_underline() {
 }
 
 fmt_code() {
-  # shellcheck disable=SC2016 # backtic in single-quote
+  # shellcheck disable=SC2016 # backtick in single-quote
   printf '`\033[38;5;247m%s%s`\n' "$*" "$RESET"
 }
 
@@ -340,6 +340,8 @@ setup_ohmyzsh() {
     -c fsck.zeroPaddedFilemode=ignore \
     -c fetch.fsck.zeroPaddedFilemode=ignore \
     -c receive.fsck.zeroPaddedFilemode=ignore \
+    -c oh-my-zsh.remote=origin \
+    -c oh-my-zsh.branch="$BRANCH" \
     --depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
     fmt_error "git clone of oh-my-zsh repo failed"
     exit 1

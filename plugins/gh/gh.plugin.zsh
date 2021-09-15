@@ -9,6 +9,8 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_gh" ]]; then
   typeset -g -A _comps
   autoload -Uz _gh
   _comps[gh]=_gh
+
+  unset ver ver_file comp_file
 fi
 
 gh completion --shell zsh >| "$ZSH_CACHE_DIR/completions/_gh" &|

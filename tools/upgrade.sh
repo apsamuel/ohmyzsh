@@ -18,9 +18,15 @@ if [[ -z "$ZSH" ]]; then
   ZSH="${0:a:h:h}"
 fi
 
+# Protect against running with shells other than zsh
 if [ -z "$ZSH_VERSION" ]; then
   exec zsh "$0" "$@"
 fi
+
+# Protect against unwanted sourcing
+case "$ZSH_EVAL_CONTEXT" in
+  *:file) echo "error: this file should not be sourced" && return ;;
+esac
 
 cd "$ZSH"
 

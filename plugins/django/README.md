@@ -1,13 +1,12 @@
 # Django plugin
 
-This plugin adds completion and hints for the [Django Project](https://www.djangoproject.com/) `manage.py` commands
-and options.
+This plugin adds completion for the [Django Project](https://www.djangoproject.com/) commands
+(`manage.py`, `django-admin`, ...).
 
-To use it, add `django` to the plugins array in your zshrc file:
+## Deprecation (2021-09-22)
 
-```zsh
-plugins=(... django)
-```
+The plugin used to provide completion for `./manage.py` and `django-admin`, but Zsh already provides
+a better, more extensive completion for those, so this plugin is no longer needed.
 
 ## Usage
 

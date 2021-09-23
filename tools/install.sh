@@ -244,15 +244,6 @@ fmt_error() {
   printf '%sError: %s%s\n' "${FMT_BOLD}${FMT_RED}" "$*" "$FMT_RESET" >&2
 }
 
-fmt_underline() {
-  printf '\033[4m%s\033[24m\n' "$*"
-}
-
-fmt_code() {
-  # shellcheck disable=SC2016 # backtick in single-quote
-  printf '`\033[38;5;247m%s%s`\n' "$*" "$RESET"
-}
-
 setup_color() {
   # Only use colors if connected to a terminal
   if ! is_tty; then

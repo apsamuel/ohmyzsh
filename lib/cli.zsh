@@ -1212,17 +1212,23 @@ function _omz::theme::list {
     return
   fi
 
+  # Print theme in use
+  if [[ -n "$ZSH_THEME" ]]; then
+    print -Pn "%U%BCurrent theme%b%u: "
+    [[ $ZSH_THEME = random ]] && echo "$RANDOM_THEME (via random)" || echo "$ZSH_THEME"
+    echo
+  fi
+
+  # Print custom themes if there are any
   if (( ${#custom_themes} )); then
     print -P "%U%BCustom themes%b%u:"
     print -l ${(q-)custom_themes} | column -x
+    echo
   fi
 
-  if (( ${#builtin_themes} )); then
-    (( ${#custom_themes} )) && echo # add a line of separation
-
-    print -P "%U%BBuilt-in themes%b%u:"
-    print -l ${(q-)builtin_themes} | column -x
-  fi
+  # Print built-in themes
+  print -P "%U%BBuilt-in themes%b%u:"
+  print -l ${(q-)builtin_themes} | column -x
 }
 
 function _omz::theme::set {
@@ -1309,6 +1315,10 @@ function _omz::theme::use {
     _omz::log error "%B$1%b theme not found"
     return 1
   fi
+
+  # Update theme settings
+  ZSH_THEME="$1"
+  [[ $1 = random ]] || unset RANDOM_THEME
 }
 
 function _omz::update {

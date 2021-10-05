@@ -146,6 +146,10 @@ function parse-commit {
   #  commit body
   #  [BREAKING CHANGE: warning]
 
+  # if commit type is not going to be displayed, do nothing else
+  type="$(commit:type "$subject")"
+  (( ${MAIN_TYPES[(Ie)$type]} || ${OTHER_TYPES[(Ie)$type]} )) || return
+
   # commits holds the commit type
   types[$hash]="$(commit:type "$subject")"
   # scopes holds the commit scope

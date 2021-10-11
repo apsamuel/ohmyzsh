@@ -87,36 +87,36 @@ alias mvn-updates='mvn versions:display-dependency-updates'
 
 
 function listMavenCompletions {
-	local file new_file
-	local -a profiles POM_FILES modules
+  local file new_file
+  local -a profiles POM_FILES modules
 
-	# Root POM
-	POM_FILES=(~/.m2/settings.xml)
+  # Root POM
+  POM_FILES=(~/.m2/settings.xml)
 
-	# POM in the current directory
-	if [[ -f pom.xml ]]; then
-		local file=pom.xml
-		POM_FILES+=("${file:A}")
-	fi
+  # POM in the current directory
+  if [[ -f pom.xml ]]; then
+    local file=pom.xml
+    POM_FILES+=("${file:A}")
+  fi
 
-	# Look for POM files in parent directories
-	while [[ -n "$file" ]] && grep -q "<parent>" "$file"; do
-		# look for a new relativePath for parent pom.xml
-		new_file=$(grep -e "<relativePath>.*</relativePath>" "$file" | sed -e 's/.*<relativePath>\(.*\)<\/relativePath>.*/\1/')
+  # Look for POM files in parent directories
+  while [[ -n "$file" ]] && grep -q "<parent>" "$file"; do
+    # look for a new relativePath for parent pom.xml
+    new_file=$(grep -e "<relativePath>.*</relativePath>" "$file" | sed -e 's/.*<relativePath>\(.*\)<\/relativePath>.*/\1/')
 
-		# if <parent> is present but not defined, assume ../pom.xml
-		if [[ -z "$new_file" ]]; then
-			new_file="../pom.xml"
-		fi
+    # if <parent> is present but not defined, assume ../pom.xml
+    if [[ -z "$new_file" ]]; then
+      new_file="../pom.xml"
+    fi
 
-		# if file doesn't exist break
-		file="${file:h}/${new_file}"
-		if ! [[ -e "$file" ]]; then
-			break
-		fi
+    # if file doesn't exist break
+    file="${file:h}/${new_file}"
+    if ! [[ -e "$file" ]]; then
+      break
+    fi
 
-		POM_FILES+=("${file:A}")
-	done
+    POM_FILES+=("${file:A}")
+  done
 
 function listMavenCompletions {
   local file new_file

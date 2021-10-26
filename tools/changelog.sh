@@ -545,7 +545,7 @@ function main {
   local -a raw_fields
   for raw_commit in $raw_commits; do
     # Truncate list on versions with a lot of commits
-    if [[ -z "$since" ]] && (( ++read_commits > 35 )); then
+    if (( ++read_commits > 40 )); then
       truncate=1
       break
     fi

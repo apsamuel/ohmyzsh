@@ -119,7 +119,7 @@ function takeurl() {
   data="$(mktemp)"
   curl -L "$1" > "$data"
   tar xf "$data"
-  thedir="$(tar tf "$data" | head -1)"
+  thedir="$(tar tf "$data" | head -n 1)"
   rm "$data"
   cd "$thedir"
 }

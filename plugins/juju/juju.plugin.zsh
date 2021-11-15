@@ -195,3 +195,4 @@ wjst() {
   shift $(( $# > 0 ))
   watch -n "$interval" --color juju status --relations --color "$@"
 }
+

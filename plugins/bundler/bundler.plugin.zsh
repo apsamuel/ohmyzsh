@@ -42,7 +42,7 @@ bundle_install() {
   else
     local cores_num="$(nproc)"
   fi
-  bundle install --jobs="$cores_num" "$@"
+  BUNDLE_JOBS="$cores_num" bundle install "$@"
 }
 
 ## Gem wrapper

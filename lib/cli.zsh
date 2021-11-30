@@ -1343,3 +1343,24 @@ function _omz::update {
     [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
   fi
 }
+
+function _omz::version {
+  (
+    cd "$ZSH"
+
+    # Get the version name:
+    # 1) try tag-like version
+    # 2) try name-rev
+    # 3) try branch name
+    local version
+    version=$(command git describe --tags HEAD 2>/dev/null) \
+    || version=$(command git name-rev --no-undefined --name-only --exclude="remotes/*" HEAD 2>/dev/null) \
+    || version=$(command git symbolic-ref --quiet --short HEAD 2>/dev/null)
+
+    # Get short hash for the current HEAD
+    local commit=$(command git rev-parse --short HEAD 2>/dev/null)
+
+    # Show version and commit hash
+    printf "%s (%s)\n" "$version" "$commit"
+  )
+}

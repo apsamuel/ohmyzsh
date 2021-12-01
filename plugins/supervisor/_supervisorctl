@@ -123,7 +123,7 @@ _supervisorctl_restart() {
 _supervisorctl_restart() {
     # TODO: add 'all'
     _arguments -s \
-        '*::supvervisor process:_get_supervisor_procs'
+        '*::supervisor process:_get_supervisor_procs'
 }
 
 (( $+functions[_supervisorctl_status] )) ||

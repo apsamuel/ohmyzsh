@@ -168,8 +168,78 @@ function hgoc() {
   hg outgoing "$@" | grep "changeset" | wc -l
 }
 
-function hg_get_bookmark_name() {
-  if [ $(in_hg) ]; then
-    echo $(hg id -B)
+# functions
+function hg_root() {
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.hg" ]]; then
+      echo "$dir"
+      return 0
+    fi
+    dir="${dir:h}"
+  done
+  return 1
+}
+
+function in_hg() {
+  hg_root >/dev/null
+}
+
+function hg_get_branch_name() {
+  local dir
+  if ! dir=$(hg_root); then
+    return
   fi
+
+  if [[ ! -f "$dir/.hg/branch" ]]; then
+    echo default
+    return
+  fi
+
+  echo "$(<"$dir/.hg/branch")"
+}
+
+function hg_get_bookmark_name() {
+  local dir
+  if ! dir=$(hg_root); then
+    return
+  fi
+
+  if [[ ! -f "$dir/.hg/bookmarks.current" ]]; then
+    return
+  fi
+
+  echo "$(<"$dir/.hg/bookmarks.current")"
+}
+
+function hg_prompt_info {
+  local dir branch dirty
+  if ! dir=$(hg_root); then
+    return
+  fi
+
+  if [[ ! -f "$dir/.hg/branch" ]]; then
+    branch=default
+  else
+    branch="$(<"$dir/.hg/branch")"
+  fi
+
+  dirty="$(hg_dirty)"
+
+  echo "${ZSH_THEME_HG_PROMPT_PREFIX}${branch:gs/%/%%}${dirty}${ZSH_THEME_HG_PROMPT_SUFFIX}"
+}
+
+function hg_dirty {
+  local hg_status
+  if ! hg_status="$(hg status -mar 2>/dev/null)"; then
+    return
+  fi
+
+  # grep exits with 0 when dirty
+  if command grep -Eq '^\s*[ACDIM!?L]' <<< "$hg_status"; then
+    echo $ZSH_THEME_HG_PROMPT_DIRTY
+    return
+  fi
+
+  echo $ZSH_THEME_HG_PROMPT_CLEAN
 }

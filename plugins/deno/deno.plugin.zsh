@@ -23,8 +23,6 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_deno" ]]; then
   typeset -g -A _comps
   autoload -Uz _deno
   _comps[deno]=_deno
-
-  unset ver ver_file comp_file
 fi
 
 deno completions zsh >| "$ZSH_CACHE_DIR/completions/_deno" &|

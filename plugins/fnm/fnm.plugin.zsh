@@ -8,8 +8,6 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_fnm" ]]; then
   typeset -g -A _comps
   autoload -Uz _fnm
   _comps[fnm]=_fnm
-
-  unset ver ver_file comp_file
 fi
 
 fnm completions --shell=zsh >| "$ZSH_CACHE_DIR/completions/_fnm" &|

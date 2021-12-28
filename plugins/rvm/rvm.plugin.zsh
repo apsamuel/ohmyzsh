@@ -61,6 +61,50 @@ function rb21 {
 _rb21() {compadd `ls -1 $rvm_path/gems | grep "^$ruby21@" | sed -e "s/^$ruby21@//" | awk '{print $1}'`}
 compdef _rb21 rb21
 
+function rb25 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby25"
+	else
+		rvm use "$ruby25@$1"
+	fi
+}
+
+_rb25() {compadd `ls -1 $rvm_path/gems | grep "^$ruby25@" | sed -e "s/^$ruby25@//" | awk '{print $1}'`}
+compdef _rb25 rb25
+
+function rb26 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby26"
+	else
+		rvm use "$ruby26@$1"
+	fi
+}
+
+_rb26() {compadd `ls -1 $rvm_path/gems | grep "^$ruby26@" | sed -e "s/^$ruby26@//" | awk '{print $1}'`}
+compdef _rb26 rb26
+
+function rb27 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby27"
+	else
+		rvm use "$ruby27@$1"
+	fi
+}
+
+_rb27() {compadd `ls -1 $rvm_path/gems | grep "^$ruby27@" | sed -e "s/^$ruby27@//" | awk '{print $1}'`}
+compdef _rb27 rb27
+
+function rb30 {
+	if [ -z "$1" ]; then
+		rvm use "$ruby30"
+	else
+		rvm use "$ruby30@$1"
+	fi
+}
+
+_rb30() {compadd `ls -1 $rvm_path/gems | grep "^$ruby30@" | sed -e "s/^$ruby30@//" | awk '{print $1}'`}
+compdef _rb30 rb30
+
 function rvm-update {
   rvm get head
 }

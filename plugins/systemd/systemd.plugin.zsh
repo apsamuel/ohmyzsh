@@ -45,6 +45,7 @@ sudo_commands=(
   reload-or-restart
   reset-failed
   rescue
+  restart
   revert
   set-default
   set-environment

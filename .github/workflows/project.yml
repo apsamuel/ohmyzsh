@@ -32,8 +32,6 @@ jobs:
           ORGANIZATION: ohmyzsh
           PROJECT_NUMBER: "1"
         run: |
-          gh auth login
-
           # Get Project data
           gh api graphql -f query='
             query($org: String!, $number: Int!) {

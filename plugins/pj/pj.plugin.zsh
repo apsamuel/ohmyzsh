@@ -30,4 +30,5 @@ _pj () {
 
   compadd ${projects:t}
 }
+
 compdef _pj pj

@@ -150,6 +150,24 @@ supports_truecolor() {
   return 1
 }
 
+# Adapted from code and information by Anton Kochkov (@XVilka)
+# Source: https://gist.github.com/XVilka/8346728
+supports_truecolor() {
+  case "$COLORTERM" in
+  truecolor|24bit) return 0 ;;
+  esac
+
+  case "$TERM" in
+  iterm           |\
+  tmux-truecolor  |\
+  linux-truecolor |\
+  xterm-truecolor |\
+  screen-truecolor) return 0 ;;
+  esac
+
+  return 1
+}
+
 fmt_link() {
   # $1: text, $2: url, $3: fallback mode
   if supports_hyperlinks; then

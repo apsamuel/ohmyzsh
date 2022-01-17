@@ -455,7 +455,7 @@ function _omz::plugin::info {
 
 function _omz::plugin::disable {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz plugin disable <plugin> [...]"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <plugin> [...]"
     return 1
   fi
 
@@ -545,7 +545,7 @@ multi == 1 && length(\$0) > 0 {
 
 function _omz::plugin::enable {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz plugin enable <plugin> [...]"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <plugin> [...]"
     return 1
   fi
 
@@ -621,7 +621,7 @@ multi == 1 && /^[^#]*\)/ {
 
 function _omz::plugin::info {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz plugin info <plugin>"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <plugin>"
     return 1
   fi
 
@@ -729,7 +729,7 @@ function _omz::plugin::load {
 
 function _omz::plugin::load {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz plugin load <plugin> [...]"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <plugin> [...]"
     return 1
   fi
 
@@ -1183,7 +1183,7 @@ function _omz::version {
 function _omz::theme {
   (( $# > 0 && $+functions[_omz::theme::$1] )) || {
     cat >&2 <<EOF
-Usage: omz theme <command> [options]
+Usage: ${(j: :)${(s.::.)0#_}} <command> [options]
 
 Available commands:
 
@@ -1198,7 +1198,7 @@ EOF
   local command="$1"
   shift
 
-  _omz::theme::$command "$@"
+  $0::$command "$@"
 }
 
 function _omz::theme::list {
@@ -1233,7 +1233,7 @@ function _omz::theme::list {
 
 function _omz::theme::set {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz theme set <theme>"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <theme>"
     return 1
   fi
 
@@ -1301,7 +1301,7 @@ EOF
 
 function _omz::theme::use {
   if [[ -z "$1" ]]; then
-    echo >&2 "Usage: omz theme use <theme>"
+    echo >&2 "Usage: ${(j: :)${(s.::.)0#_}} <theme>"
     return 1
   fi
 

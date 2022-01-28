@@ -99,7 +99,7 @@ __gitcomp_opts ()
 		else
 			sfx="$4"
 		fi
-		__gitcompadd "$c" "${2-}" "$sfx" -q
+		__gitcompadd "$c" "${2-}" "$sfx"
 	done
 }
 
@@ -289,21 +289,6 @@ __gitcomp_file_direct ()
 	__gitcomp_file "$1" ""
 }
 
-__gitcomp_nl_append ()
-{
-	__gitcomp_nl "$@"
-}
-
-__gitcomp_direct_append ()
-{
-	__gitcomp_direct "$@"
-}
-
-_git_zsh ()
-{
-	__gitcomp "v1.2"
-}
-
 __git_complete_command ()
 {
 	emulate -L zsh
@@ -388,9 +373,7 @@ __git_zsh_main ()
 {
 	local curcontext="$curcontext" state state_descr line
 	typeset -A opt_args
-	local -a orig_words __git_C_args
-
-	orig_words=( ${words[@]} )
+	local -a __git_C_args
 
 	_arguments -C \
 		'(-p --paginate -P --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
@@ -427,7 +410,7 @@ __git_zsh_main ()
 		emulate ksh -c __git_complete_config_variable_name_and_value
 		;;
 	(arg)
-		local command="${words[1]}" __git_dir
+		local command="${words[1]}" __git_dir __git_cmd_idx=1
 
 		if (( $+opt_args[--bare] )); then
 			__git_dir='.'
@@ -441,7 +424,7 @@ __git_zsh_main ()
 
 		(( $+opt_args[--help] )) && command='help'
 
-		words=( ${orig_words[@]} )
+		words=( git ${words[@]} )
 
 		__git_zsh_bash_func $command
 		;;

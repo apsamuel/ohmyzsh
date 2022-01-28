@@ -85,9 +85,6 @@ RUNZSH=${RUNZSH:-yes}
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 OVERWRITE_CONFIRMATION=${OVERWRITE_CONFIRMATION:-yes}
 
-# Sane defaults
-USER=${USER:-$(whoami)}
-
 
 command_exists() {
   command -v "$@" >/dev/null 2>&1

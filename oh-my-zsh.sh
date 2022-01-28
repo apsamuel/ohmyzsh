@@ -94,7 +94,6 @@ if [[ -z "$ZSH_CUSTOM" ]]; then
     ZSH_CUSTOM="$ZSH/custom"
 fi
 
-
 is_plugin() {
   local base_dir=$1
   local name=$2
@@ -233,8 +232,8 @@ autoload -U compinit
 compinit -i
 
 # Load all of your custom configurations from custom/
-for config_file ($ZSH_CUSTOM/*.zsh(N)); do
-  source $config_file
+for config_file ("$ZSH_CUSTOM"/*.zsh(N)); do
+  source "$config_file"
 done
 unset config_file
 

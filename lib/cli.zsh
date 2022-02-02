@@ -537,10 +537,8 @@ multi == 1 && length(\$0) > 0 {
   # Restart the zsh session if there were no errors
   _omz::log info "plugins disabled: ${(j:, :)dis_plugins}."
 
-  # Old zsh versions don't have ZSH_ARGZERO
-  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
-  # Check whether to run a login shell
-  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+  # Only reload zsh if run in an interactive session
+  [[ ! -o interactive ]] || _omz::reload
 }
 
 function _omz::plugin::enable {
@@ -613,10 +611,8 @@ multi == 1 && /^[^#]*\)/ {
   # Restart the zsh session if there were no errors
   _omz::log info "plugins enabled: ${(j:, :)add_plugins}."
 
-  # Old zsh versions don't have ZSH_ARGZERO
-  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
-  # Check whether to run a login shell
-  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+  # Only reload zsh if run in an interactive session
+  [[ ! -o interactive ]] || _omz::reload
 }
 
 function _omz::plugin::info {
@@ -1293,10 +1289,8 @@ EOF
   # Restart the zsh session if there were no errors
   _omz::log info "'$1' theme set correctly."
 
-  # Old zsh versions don't have ZSH_ARGZERO
-  local zsh="${ZSH_ARGZERO:-${functrace[-1]%:*}}"
-  # Check whether to run a login shell
-  [[ "$zsh" = -* || -o login ]] && exec -l "${zsh#-}" || exec "$zsh"
+  # Only reload zsh if run in an interactive session
+  [[ ! -o interactive ]] || _omz::reload
 }
 
 function _omz::theme::use {

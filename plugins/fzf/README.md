@@ -77,6 +77,7 @@ If not set, the plugin will try to set it to these, in the order in which they'r
 
 - [`rg`](https://github.com/BurntSushi/ripgrep)
 - [`fd`](https://github.com/sharkdp/fd)
+- [`rg`](https://github.com/BurntSushi/ripgrep)
 - [`ag`](https://github.com/ggreer/the_silver_searcher)
 
 ### `DISABLE_FZF_AUTO_COMPLETION`

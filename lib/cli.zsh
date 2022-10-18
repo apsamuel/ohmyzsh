@@ -1224,7 +1224,7 @@ function _omz::theme::list {
 
   # Print built-in themes
   print -P "%U%BBuilt-in themes%b%u:"
-  print -l ${(q-)builtin_themes} | column -x
+  print -lac ${(q-)builtin_themes}
 }
 
 function _omz::theme::set {

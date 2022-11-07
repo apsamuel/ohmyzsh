@@ -51,6 +51,12 @@ function git_main_branch() {
   return 1
 }
 
+alias gwt='git worktree'
+alias gwta='git worktree add'
+alias gwtls='git worktree list'
+alias gwtmv='git worktree move'
+alias gwtrm='git worktree remove'
+
 alias gam='git am'
 alias gamc='git am --continue'
 alias gams='git am --skip'

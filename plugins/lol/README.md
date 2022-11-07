@@ -66,6 +66,6 @@ nowai u=r,go= some.file
 # ssh root@catserver.org
 pwned root@catserver.org
 
-# git commit -m "$(curl -s http://whatthecommit.com/index.txt)"
+# git commit -m "$(curl -s https://whatthecommit.com/index.txt)"
 yolo
 ```

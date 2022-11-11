@@ -9,7 +9,7 @@ fi
 
 (( $+commands[apt] )) && APT=apt || APT=apt-get
 
-alias acs='apt-cache search'
+alias acse='apt-cache search'
 
 alias afs='apt-file search --regexp'
 

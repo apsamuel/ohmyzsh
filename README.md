@@ -438,6 +438,16 @@ case.
 zstyle ':omz:alpha:lib:git' async-prompt force
 ```
 
+### Remove directories aliases
+
+If you want to skip ohmyzsh default
+[directories aliases](https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/directories.zsh) you can add the
+following snippet to your `zshrc`, before loading `oh-my-zsh.sh` script:
+
+```zsh
+zstyle ':omz:directories' aliases no
+```
+
 ## Getting Updates
 
 By default, you will be prompted to check for updates every 2 weeks. You can choose other update modes by

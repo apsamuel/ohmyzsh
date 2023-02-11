@@ -1,7 +1,5 @@
 #compdef gradle gradlew gw
 
-#compdef gradle gradlew gw
-
 __gradle-set-project-root-dir() {
     local dir=`pwd`
     project_root_dir=`pwd`

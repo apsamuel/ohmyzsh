@@ -90,6 +90,25 @@ VI_MODE_CURSOR_OPPEND=0
 - 5 - Blinking line
 - 6 - Solid line
 
+## Cursor Styles
+
+You can control the cursor style used in each active vim mode by changing the values of the following variables.
+
+```zsh
+# defaults
+VI_MODE_CURSOR_NORMAL=2
+VI_MODE_CURSOR_VISUAL=6
+VI_MODE_CURSOR_INSERT=6
+VI_MODE_CURSOR_OPPEND=0
+```
+
+- 0, 1 - Blinking block
+- 2 - Solid block
+- 3 - Blinking underline
+- 4 - Solid underline
+- 5 - Blinking line
+- 6 - Solid line
+
 ## Key bindings
 
 Use `ESC` or `CTRL-[` to enter `Normal mode`.

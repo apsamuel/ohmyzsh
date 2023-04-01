@@ -18,6 +18,8 @@ if [[ -z "$ZSH" ]]; then
   ZSH="${0:a:h:h}"
 fi
 
+local ret=0 # exit code
+
 # Protect against running with shells other than zsh
 if [ -z "$ZSH_VERSION" ]; then
   exec zsh "$0" "$@"

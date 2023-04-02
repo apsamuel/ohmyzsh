@@ -171,6 +171,8 @@ EOF
       fi
     elif [[ ${#content} -eq 0 ]]; then
       command rmdir "$extract_dir"
+    elif [[ ${#content} -eq 0 ]]; then
+      command rmdir "$extract_dir"
     fi
   done
 }

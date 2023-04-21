@@ -17,3 +17,4 @@ plugins/terraform/                  @mcornella
 plugins/universalarchive/           @Konfekt
 plugins/wp-cli/                     @joshmedeski
 plugins/zoxide/                     @ajeetdsouza
+plugins/starship/                   @axieax

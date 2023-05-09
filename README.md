@@ -438,17 +438,19 @@ case.
 zstyle ':omz:alpha:lib:git' async-prompt force
 ```
 
-### Disable GNU ls in macOS and freeBSD systems
+### Enable GNU ls in macOS and freeBSD systems
 
-<a name="disable-gnu-ls"></a>
+<a name="enable-gnu-ls"></a>
 
-The default behaviour in Oh My Zsh is to use GNU `ls` even in macOS and freeBSD systems if it's installed (as
-`gls` command) when enabling colorized `ls` in `lib/theme-and-appearance.zsh`. If you want to disable this
-behaviour you can use zstyle-based config before sourcing `oh-my-zsh.sh`:
+The default behaviour in Oh My Zsh is to use BSD `ls` in macOS and freeBSD systems. If GNU `ls` is installed
+(as `gls` command), you can choose to use it instead. To do it, you can use zstyle-based config before
+sourcing `oh-my-zsh.sh`:
 
 ```zsh
 zstyle ':omz:lib:theme-and-appearance' gnu-ls no
 ```
+
+_Note: this is not compatible with `DISABLE_LS_COLORS=true`_
 
 ### Skip aliases
 

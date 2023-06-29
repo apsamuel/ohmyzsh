@@ -57,6 +57,9 @@ if [[ ! -f "$ZSH_CACHE_DIR/completions/_docker" ]]; then
 fi
 
 {
+  # docker version returns `Docker version 24.0.2, build cb74dfcd85`
+  # with `s:,:` remove the comma after the version, and select third word of it
+  local _docker_version=${${(s:,:z)"$(command docker --version)"}[3]}
   # `docker completion` is only available from 23.0.0 on
   # docker version returns `Docker version 24.0.2, build cb74dfcd85`
   # with `s:,:` remove the comma after the version, and select third word of it

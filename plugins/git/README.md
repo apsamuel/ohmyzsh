@@ -234,10 +234,10 @@ branch exists. We do this via the function `git_main_branch`.
 
 ### Main branch preference
 
-Following the recent push for removing racially-charged words from our technical vocabulary, the git plugin favors using
-a branch name other than `master`. In this case, we favor the shorter, neutral and descriptive term `main`. This means
-that any aliases and functions that previously used `master`, will use `main` if that branch exists. We do this via the
-function `git_main_branch`.
+Following the recent push for removing racially-charged words from our technical vocabulary, the git plugin
+favors using a branch name other than `master`. In this case, we favor the shorter, neutral and descriptive
+term `main`. This means that any aliases and functions that previously used `master`, will use `main` if that
+branch exists. We do this via the function `git_main_branch`.
 
 ### Deprecated aliases
 

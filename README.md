@@ -438,7 +438,7 @@ case.
 zstyle ':omz:alpha:lib:git' async-prompt force
 ```
 
-### Enable GNU ls in macOS and freeBSD systems
+### Enable GNU ls In macOS And freeBSD Systems
 
 <a name="enable-gnu-ls"></a>
 
@@ -452,7 +452,7 @@ zstyle ':omz:lib:theme-and-appearance' gnu-ls yes
 
 _Note: this is not compatible with `DISABLE_LS_COLORS=true`_
 
-### Skip aliases
+### Skip Aliases
 
 <a name="remove-directories-aliases"></a>
 

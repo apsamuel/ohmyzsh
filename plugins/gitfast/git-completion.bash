@@ -959,7 +959,6 @@ __git_list_merge_strategies ()
 	}'
 }
 
-__git_merge_strategies_default='octopus ours recursive resolve subtree'
 __git_merge_strategies=
 # 'git merge -s help' (and thus detection of the merge strategy
 # list) fails, unfortunately, if run outside of any git working
@@ -969,8 +968,7 @@ __git_merge_strategies=
 __git_compute_merge_strategies ()
 {
 	test -n "$__git_merge_strategies" ||
-	{ __git_merge_strategies=$(__git_list_merge_strategies);
-		__git_merge_strategies="${__git_merge_strategies:-__git_merge_strategies_default}"; }
+	__git_merge_strategies=$(__git_list_merge_strategies)
 }
 
 __git_merge_strategy_options="ours theirs subtree subtree= patience

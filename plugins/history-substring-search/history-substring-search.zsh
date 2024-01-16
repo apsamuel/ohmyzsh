@@ -295,8 +295,8 @@ _history-substring-search-begin() {
     fi
 
     #
-    # Escape and join query parts with wildcard character '*' as separator
-    # `(j:CHAR:)` join array to string with CHAR as separator
+    # Escape and join query parts with wildcard character '*' as seperator
+    # `(j:CHAR:)` join array to string with CHAR as seperator
     #
     local search_pattern="${(j:*:)_history_substring_search_query_parts[@]//(#m)[\][()|\\*?#<>~^]/\\$MATCH}*"
 
@@ -422,6 +422,23 @@ _history-substring-search-end() {
     # are left lingering after search is finished.
     #
     read -k -t ${HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT:-1} && zle -U -- "$REPLY"
+    region_highlight=( "${(@)region_highlight:#*${highlight_memo}*}" )
+  fi
+
+  #
+  # When this function returns, z-sy-h runs its line-pre-redraw hook. It has no
+  # logic for determining highlight priority, when two different memo= marked
+  # region highlights overlap; instead, it always prioritises itself. Below is
+  # a workaround for dealing with it.
+  #
+  if [[ $_history_substring_search_zsh_5_9 -eq 1 ]]; then
+    zle -R
+    #
+    # After line redraw with desired highlight, wait for timeout or user input
+    # before removing search highlight and exiting. This ensures no highlights
+    # are left lingering after search is finished.
+    #
+    read -k -t ${HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT:-1} && zle -U $REPLY
     region_highlight=( "${(@)region_highlight:#*${highlight_memo}*}" )
   fi
 

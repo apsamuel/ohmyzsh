@@ -37,7 +37,7 @@ Where `type` is one of the following:
 > ⚠️ Enabling this plugin will (potentially) overwrite all `alias.<type>` that you manually set. Use with
 > care!
 
-> NOTE: the alias for `revert` type is `rev`, as otherwise it conflicts with the git command of the same name.  
+> NOTE: the alias for `revert` type is `rev`, as otherwise it conflicts with the git command of the same name.
 > It will still generate a commit message in the format `revert: <message>`
 
 ## Examples

@@ -85,7 +85,7 @@ function fl {
     else if forkLift is not null then
         set appName to forkLift
     end if
-    
+
     tell application appName
         activate
         set forkLiftVersion to version

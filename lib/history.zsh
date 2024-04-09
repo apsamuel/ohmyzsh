@@ -4,7 +4,10 @@ function omz_history {
   local clear list stamp REPLY
   zparseopts -E -D c=clear l=list f=stamp E=stamp i=stamp t:=stamp
 
-  if [[ -n "$clear" ]]; then
+  if [[ $# -eq 0 ]]; then
+    # if no arguments provided, show full history starting from 1
+    builtin fc -l 1
+  elif [[ -n "$clear" ]]; then
     # if -c provided, clobber the history file
 
     # confirm action before deleting history

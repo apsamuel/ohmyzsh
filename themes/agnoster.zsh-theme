@@ -224,8 +224,8 @@ prompt_git() {
     fi
 
     local ahead behind
-    ahead=$(git log --oneline @{upstream}.. 2>/dev/null)
-    behind=$(git log --oneline ..@{upstream} 2>/dev/null)
+    ahead=$(command git log --oneline @{upstream}.. 2>/dev/null)
+    behind=$(command git log --oneline ..@{upstream} 2>/dev/null)
     if [[ -n "$ahead" ]] && [[ -n "$behind" ]]; then
       PL_BRANCH_CHAR=$'\u21c5'
     elif [[ -n "$ahead" ]]; then
@@ -332,10 +332,10 @@ prompt_bzr() {
   done
 
   local bzr_status status_mod status_all revision
-  if bzr_status=$(bzr status 2>&1); then
+  if bzr_status=$(command bzr status 2>&1); then
     status_mod=$(echo -n "$bzr_status" | head -n1 | grep "modified" | wc -m)
     status_all=$(echo -n "$bzr_status" | head -n1 | wc -m)
-    revision=${$(bzr log -r-1 --log-format line | cut -d: -f1):gs/%/%%}
+    revision=${$(command bzr log -r-1 --log-format line | cut -d: -f1):gs/%/%%}
     if [[ $status_mod -gt 0 ]] ; then
       prompt_segment yellow black "bzr@$revision ✚"
     else
@@ -351,13 +351,13 @@ prompt_bzr() {
 prompt_hg() {
   (( $+commands[hg] )) || return
   local rev st branch
-  if $(hg id >/dev/null 2>&1); then
-    if $(hg prompt >/dev/null 2>&1); then
-      if [[ $(hg prompt "{status|unknown}") = "?" ]]; then
+  if $(command hg id >/dev/null 2>&1); then
+    if $(command hg prompt >/dev/null 2>&1); then
+      if [[ $(command hg prompt "{status|unknown}") = "?" ]]; then
         # if files are not added
         prompt_segment red white
         st='±'
-      elif [[ -n $(hg prompt "{status|modified}") ]]; then
+      elif [[ -n $(command hg prompt "{status|modified}") ]]; then
         # if any modification
         prompt_segment yellow black
         st='±'
@@ -365,12 +365,12 @@ prompt_hg() {
         # if working copy is clean
         prompt_segment green $CURRENT_FG
       fi
-      echo -n ${$(hg prompt "☿ {rev}@{branch}"):gs/%/%%} $st
+      echo -n ${$(command hg prompt "☿ {rev}@{branch}"):gs/%/%%} $st
     else
       st=""
-      rev=$(hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
-      branch=$(hg id -b 2>/dev/null)
-      if `hg st | grep -q "^\?"`; then
+      rev=$(command hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
+      branch=$(command hg id -b 2>/dev/null)
+      if command hg st | command grep -q "^\?"; then
         prompt_segment red black
         st='±'
       elif `hg st | grep -q "^(M|A)"`; then

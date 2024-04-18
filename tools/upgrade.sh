@@ -30,6 +30,11 @@ case "$ZSH_EVAL_CONTEXT" in
   *:file) echo "error: this file should not be sourced" && return ;;
 esac
 
+# Define "$ZSH" if not defined -- in theory this should be `export`ed by the calling script
+if [[ -z "$ZSH" ]]; then
+  ZSH="${0:a:h:h}"
+fi
+
 cd "$ZSH"
 
 verbose_mode="default"

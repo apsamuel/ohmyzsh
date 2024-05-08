@@ -480,6 +480,7 @@ function _omz::plugin::disable {
   gsub(/(${(j:|:)dis_plugins})\s+/, \"\") # with spaces after
   gsub(/\((${(j:|:)dis_plugins})\)/, \"\") # without spaces (only plugin)
 "
+
   # Disable plugins awk script
   local awk_script="
 # if plugins=() is in oneline form, substitute disabled plugins and go to next line

@@ -12,6 +12,9 @@ import requests
 import yaml
 from semver import Version
 
+import requests
+import yaml
+
 # Get TMP_DIR variable from environment
 TMP_DIR = os.path.join(os.environ.get("TMP_DIR", "/tmp"), "ohmyzsh")
 # Relative path to dependencies.yml file

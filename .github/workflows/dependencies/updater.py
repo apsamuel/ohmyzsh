@@ -14,6 +14,7 @@ from semver import Version
 
 import requests
 import yaml
+from semver import Version
 
 # Get TMP_DIR variable from environment
 TMP_DIR = os.path.join(os.environ.get("TMP_DIR", "/tmp"), "ohmyzsh")
@@ -28,6 +29,35 @@ HEADERS = {
 }
 if GH_TOKEN:
     HEADERS["Authorization"] = f"Bearer {GH_TOKEN}"
+
+# utils for tag comparison
+BASEVERSION = re.compile(
+    r"""[vV]?
+    (?P<major>(0|[1-9])\d*)
+    (\.
+    (?P<minor>(0|[1-9])\d*)
+    (\.
+    (?P<patch>(0|[1-9])\d*)
+    )?
+    )?
+    """,
+    re.VERBOSE,
+)
+
+
+def coerce(version: str) -> Optional[Version]:
+    match = BASEVERSION.search(version)
+    if not match:
+        return None
+
+    # BASEVERSION looks for `MAJOR.minor.patch` in the string given
+    # it fills with None if any of them is missing (for example `2.1`)
+    ver = {
+        key: 0 if value is None else value for key, value in match.groupdict().items()
+    }
+    # Version takes `major`, `minor`, `patch` arguments
+    ver = Version(**ver)  # pyright: ignore[reportArgumentType]
+    return ver
 
 # utils for tag comparison
 BASEVERSION = re.compile(

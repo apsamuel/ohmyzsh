@@ -441,7 +441,7 @@ zstyle ':omz:alpha:lib:git' async-prompt force
 
 <a name="enable-gnu-ls"></a>
 
-The default behaviour in Oh My Zsh is to use BSD `ls` in macOS and freeBSD systems. If GNU `ls` is installed
+The default behaviour in Oh My Zsh is to use BSD `ls` in macOS and FreeBSD systems. If GNU `ls` is installed
 (as `gls` command), you can choose to use it instead. To do it, you can use zstyle-based config before
 sourcing `oh-my-zsh.sh`:
 
@@ -474,7 +474,7 @@ zstyle ':omz:plugins:*' aliases no
 zstyle ':omz:plugins:git' aliases no
 ```
 
-You can combine these in other ways taking into account that more specific scopes takes precedence:
+You can combine these in other ways taking into account that more specific scopes take precedence:
 
 ```sh
 # Skip all plugin aliases, except for the git plugin
@@ -497,7 +497,7 @@ zstyle ':omz:lib:directories' aliases no
 ### Disable async git prompt
 
 Async prompt functions are an experimental feature (included on April 3, 2024) that allows Oh My Zsh to render prompt information
-asyncronously. This can improve prompt rendering performance, but it might not work well with some setups. We hope that's not an
+asynchronously. This can improve prompt rendering performance, but it might not work well with some setups. We hope that's not an
 issue, but if you're seeing problems with this new feature, you can turn it off by setting the following in your .zshrc file,
 before Oh My Zsh is sourced:
 

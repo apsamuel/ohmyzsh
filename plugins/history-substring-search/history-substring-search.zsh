@@ -438,7 +438,7 @@ _history-substring-search-end() {
     # before removing search highlight and exiting. This ensures no highlights
     # are left lingering after search is finished.
     #
-    read -k -t ${HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT:-1} && zle -U $REPLY
+    read -k -t ${HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT:-1} && zle -U -- "$REPLY"
     region_highlight=( "${(@)region_highlight:#*${highlight_memo}*}" )
   fi
 

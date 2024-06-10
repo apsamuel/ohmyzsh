@@ -469,14 +469,8 @@ _swift_package() {
                 (diagnose-api-breaking-changes)
                     _swift_package_diagnose-api-breaking-changes
                     ;;
-                (experimental-api-diff)
-                    _swift_package_experimental-api-diff
-                    ;;
                 (dump-symbol-graph)
                     _swift_package_dump-symbol-graph
-                    ;;
-                (dump-pif)
-                    _swift_package_dump-pif
                     ;;
                 (dump-package)
                     _swift_package_dump-package
@@ -664,7 +658,7 @@ _swift_package_unedit() {
     integer ret=1
     local -a args
     args+=(
-        '--force[Unedit the package even if it has uncommitted and unpushed changes]'
+        '--force[Unedit the package even if it has uncommited and unpushed changes]'
         ':package-name:'
         '--version[Show the version.]'
         '(-help -h --help)'{-help,-h,--help}'[Show help information.]'

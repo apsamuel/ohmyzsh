@@ -138,8 +138,10 @@ plugins=(... git)
 | `gpd`                  | `git push --dry-run`                                                                                                            |
 | `gpf!`                 | `git push --force`                                                                                                              |
 | `ggf`                  | `git push --force origin $(current_branch)`                                                                                     |
-| `gpf`                  | On Git >= 2.30: `git push --force-with-lease --force-if-includes`                                                               |
-| `gpf`                  | On Git < 2.30: `git push --force-with-lease`                                                                                    |
+| `gpf`                  | On Git >= 2.30: after confirmation, `git push --force-with-lease --force-if-includes`                                           |
+| `gpf`                  | On Git < 2.30: after confirmation, `git push --force-with-lease`                                                                |
+| `gpff`                 | On Git >= 2.30: `git push --force-with-lease --force-if-includes`                                                               |
+| `gpff`                 | On Git < 2.30: `git push --force-with-lease`                                                                                    |
 | `ggfl`                 | `git push --force-with-lease origin $(current_branch)`                                                                          |
 | `gpsup`                | `git push --set-upstream origin $(git_current_branch)`                                                                          |
 | `gpsupf`               | On Git >= 2.30: `git push --set-upstream origin $(git_current_branch) --force-with-lease --force-if-includes`                   |

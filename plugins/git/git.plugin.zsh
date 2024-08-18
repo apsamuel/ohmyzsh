@@ -321,13 +321,10 @@ function ggf() {
 }
 compdef _git ggf=git-push
 
-alias 'gpf!'='git push --force'
+alias gpf!='git push --force'
 is-at-least 2.30 "$git_version" \
-  && alias gpf='read -k 1 -q "?Continue force-push? [y/N] " && echo && git push --force-with-lease --force-if-includes' \
-  || alias gpf='read -k 1 -q "?Continue force-push? [y/N] " && echo && git push --force-with-lease'
-is-at-least 2.30 "$git_version" \
-  && alias gpff='git push --force-with-lease --force-if-includes' \
-  || alias gpff='git push --force-with-lease'
+  && alias gpf='git push --force-with-lease --force-if-includes' \
+  || alias gpf='git push --force-with-lease'
 
 function ggfl() {
   local b

@@ -455,9 +455,9 @@ _Note: this is not compatible with `DISABLE_LS_COLORS=true`_
 
 <a name="remove-directories-aliases"></a>
 
-If you want to skip default Oh My Zsh aliases (those defined in `lib/*` files) or plugin aliases,
-you can use the settings below in your `~/.zshrc` file, **before Oh My Zsh is loaded**. Note that
-there are many different ways to skip aliases, depending on your needs.
+If you want to skip default Oh My Zsh aliases (those defined in `lib/*` files) or plugin aliases, you can use
+the settings below in your `~/.zshrc` file, **before Oh My Zsh is loaded**. Note that there are many different
+ways to skip aliases, depending on your needs.
 
 ```sh
 # Skip all aliases, in lib files and enabled plugins
@@ -496,19 +496,19 @@ zstyle ':omz:lib:directories' aliases no
 
 #### Notice <!-- omit in toc -->
 
-> This feature is currently in a testing phase and it may be subject to change in the future.
-> It is also not currently compatible with plugin managers such as zpm or zinit, which don't
-> source the init script (`oh-my-zsh.sh`) where this feature is implemented in.
+> This feature is currently in a testing phase and it may be subject to change in the future. It is also not
+> currently compatible with plugin managers such as zpm or zinit, which don't source the init script
+> (`oh-my-zsh.sh`) where this feature is implemented in.
 
-> It is also not currently aware of "aliases" that are defined as functions. Example of such
-> are `gccd`, `ggf`, or `ggl` functions from the git plugin.
+> It is also not currently aware of "aliases" that are defined as functions. Example of such are `gccd`,
+> `ggf`, or `ggl` functions from the git plugin.
 
 ### Disable async git prompt
 
-Async prompt functions are an experimental feature (included on April 3, 2024) that allows Oh My Zsh to render prompt information
-asynchronously. This can improve prompt rendering performance, but it might not work well with some setups. We hope that's not an
-issue, but if you're seeing problems with this new feature, you can turn it off by setting the following in your .zshrc file,
-before Oh My Zsh is sourced:
+Async prompt functions are an experimental feature (included on April 3, 2024) that allows Oh My Zsh to render
+prompt information asynchronously. This can improve prompt rendering performance, but it might not work well
+with some setups. We hope that's not an issue, but if you're seeing problems with this new feature, you can
+turn it off by setting the following in your .zshrc file, before Oh My Zsh is sourced:
 
 ```sh
 zstyle ':omz:alpha:lib:git' async-prompt no

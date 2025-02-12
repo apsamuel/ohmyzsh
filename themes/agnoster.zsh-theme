@@ -223,15 +223,17 @@ prompt_git() {
       mode=" >R>"
     fi
 
-    local ahead behind
-    ahead=$(command git log --oneline @{upstream}.. 2>/dev/null)
-    behind=$(command git log --oneline ..@{upstream} 2>/dev/null)
-    if [[ -n "$ahead" ]] && [[ -n "$behind" ]]; then
-      PL_BRANCH_CHAR=$'\u21c5'
-    elif [[ -n "$ahead" ]]; then
-      PL_BRANCH_CHAR=$'\u21b1'
-    elif [[ -n "$behind" ]]; then
-      PL_BRANCH_CHAR=$'\u21b0'
+    if [[ $AGNOSTER_GIT_BRANCH_STATUS == 'true' ]]; then
+      local ahead behind
+      ahead=$(command git log --oneline @{upstream}.. 2>/dev/null)
+      behind=$(command git log --oneline ..@{upstream} 2>/dev/null)
+      if [[ -n "$ahead" ]] && [[ -n "$behind" ]]; then
+        PL_BRANCH_CHAR=$'\u21c5'
+      elif [[ -n "$ahead" ]]; then
+        PL_BRANCH_CHAR=$'\u21b1'
+      elif [[ -n "$behind" ]]; then
+        PL_BRANCH_CHAR=$'\u21b0'
+      fi
     fi
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
@@ -337,12 +339,12 @@ prompt_bzr() {
     status_all=$(echo -n "$bzr_status" | head -n1 | wc -m)
     revision=${$(command bzr log -r-1 --log-format line | cut -d: -f1):gs/%/%%}
     if [[ $status_mod -gt 0 ]] ; then
-      prompt_segment yellow black "bzr@$revision ✚"
+      prompt_segment "$AGNOSTER_BZR_DIRTY_BG" "$AGNOSTER_BZR_DIRTY_FG" "bzr@$revision ✚"
     else
       if [[ $status_all -gt 0 ]] ; then
-        prompt_segment yellow black "bzr@$revision"
+        prompt_segment "$AGNOSTER_BZR_DIRTY_BG" "$AGNOSTER_BZR_DIRTY_FG" "bzr@$revision"
       else
-        prompt_segment green black "bzr@$revision"
+        prompt_segment "$AGNOSTER_BZR_CLEAN_BG" "$AGNOSTER_BZR_CLEAN_FG" "bzr@$revision"
       fi
     fi
   fi
@@ -355,15 +357,15 @@ prompt_hg() {
     if $(command hg prompt >/dev/null 2>&1); then
       if [[ $(command hg prompt "{status|unknown}") = "?" ]]; then
         # if files are not added
-        prompt_segment red white
+        prompt_segment "$AGNOSTER_HG_NEWFILE_BG" "$AGNOSTER_HG_NEWFILE_FG"
         st='±'
       elif [[ -n $(command hg prompt "{status|modified}") ]]; then
         # if any modification
-        prompt_segment yellow black
+        prompt_segment "$AGNOSTER_HG_CHANGED_BG" "$AGNOSTER_HG_CHANGED_FG"
         st='±'
       else
         # if working copy is clean
-        prompt_segment green $CURRENT_FG
+        prompt_segment "$AGNOSTER_HG_CLEAN_BG" "$AGNOSTER_HG_CLEAN_FG"
       fi
       echo -n ${$(command hg prompt "☿ {rev}@{branch}"):gs/%/%%} $st
     else
@@ -371,13 +373,13 @@ prompt_hg() {
       rev=$(command hg id -n 2>/dev/null | sed 's/[^-0-9]//g')
       branch=$(command hg id -b 2>/dev/null)
       if command hg st | command grep -q "^\?"; then
-        prompt_segment red black
+        prompt_segment "$AGNOSTER_HG_NEWFILE_BG" "$AGNOSTER_HG_NEWFILE_FG"
         st='±'
       elif `hg st | grep -q "^(M|A)"`; then
         prompt_segment yellow black
         st='±'
       else
-        prompt_segment green $CURRENT_FG
+        prompt_segment "$AGNOSTER_HG_CLEAN_BG" "$AGNOSTER_HG_CLEAN_FG"
       fi
       echo -n "☿ ${rev:gs/%/%%}@${branch:gs/%/%%}" $st
     fi
@@ -407,7 +409,7 @@ prompt_virtualenv() {
 # Virtualenv: current working virtualenv
 prompt_virtualenv() {
   if [[ -n "$VIRTUAL_ENV" && -n "$VIRTUAL_ENV_DISABLE_PROMPT" ]]; then
-    prompt_segment blue black "(${VIRTUAL_ENV:t:gs/%/%%})"
+    prompt_segment "$AGNOSTER_VENV_BG" "$AGNOSTER_VENV_FG" "(${VIRTUAL_ENV:t:gs/%/%%})"
   fi
 }
 
@@ -456,8 +458,8 @@ prompt_terraform() {
 prompt_aws() {
   [[ -z "$AWS_PROFILE" || "$SHOW_AWS_PROMPT" = false ]] && return
   case "$AWS_PROFILE" in
-    *-prod|*production*) prompt_segment red yellow  "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
-    *) prompt_segment green black "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
+    *-prod|*production*) prompt_segment "$AGNOSTER_AWS_PROD_BG" "$AGNOSTER_AWS_PROD_FG"  "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
+    *) prompt_segment "$AGNOSTER_AWS_BG" "$AGNOSTER_AWS_FG" "AWS: ${AWS_PROFILE:gs/%/%%}" ;;
   esac
 }
 

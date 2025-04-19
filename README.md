@@ -514,7 +514,7 @@ turn it off by setting the following in your .zshrc file, before Oh My Zsh is so
 zstyle ':omz:alpha:lib:git' async-prompt no
 ```
 
-If your problem is that the git prompt just stopped appearing, you can try to force it setting the following
+If your problem is that the git prompt just stopped appearing, you can try to force it by setting the following
 configuration before `oh-my-zsh.sh` is sourced. If it still does not work, please open an issue with your
 case.
 

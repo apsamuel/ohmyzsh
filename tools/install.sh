@@ -25,9 +25,10 @@
 #   BRANCH  - branch to check out immediately after install (default: master)
 #
 # Other options:
-#   CHSH       - 'no' means the installer will not change the default shell (default: yes)
-#   RUNZSH     - 'no' means the installer will not run zsh after the install (default: yes)
-#   KEEP_ZSHRC - 'yes' means the installer will not replace an existing .zshrc (default: no)
+#   CHSH                   - 'no' means the installer will not change the default shell (default: yes)
+#   RUNZSH                 - 'no' means the installer will not run zsh after the install (default: yes)
+#   KEEP_ZSHRC             - 'yes' means the installer will not replace an existing .zshrc (default: no)
+#   OVERWRITE_CONFIRMATION - 'no' means the installer will not ask for confirmation to overwrite the existing .zshrc (default: yes)
 #
 # Other options:
 #   CHSH                   - 'no' means the installer will not change the default shell (default: yes)

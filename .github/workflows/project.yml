@@ -56,7 +56,6 @@ jobs:
           PLUGIN_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name == "Plugin") | .id' project_data.json)
           THEME_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name == "Theme") | .id' project_data.json)
           EOF
-
       - name: Add to project
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -73,7 +72,6 @@ jobs:
           ' -f project="$PROJECT_ID" -f content="$ISSUE_OR_PR_ID" --jq '.data.addProjectV2ItemById.item.id')"
 
           echo "ITEM_ID=$item_id" >> $GITHUB_ENV
-
       - name: Classify Pull Request
         if: github.event_name == 'pull_request_target'
         env:

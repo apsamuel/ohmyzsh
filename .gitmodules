@@ -1,0 +1,21 @@
+[submodule "custom/plugins/conda-zsh-completion"]
+	path = custom/plugins/conda-zsh-completion
+	url = git@github.com:esc/conda-zsh-completion.git
+[submodule "custom/plugins/F-Sy-H"]
+	path = custom/plugins/F-Sy-H
+	url = https://github.com/z-shell/F-Sy-H.git
+[submodule "custom/plugins/fzf-tab"]
+	path = custom/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab
+[submodule "custom/plugins/navi"]
+	path = custom/plugins/navi
+	url = git@github.com:denisidoro/navi.git
+[submodule "custom/plugins/zsh_codex"]
+	path = custom/plugins/zsh_codex
+	url = git@github.com:tom-doerr/zsh_codex.git
+[submodule "custom/plugins/zsh-vi-mode"]
+	path = custom/plugins/zsh-vi-mode
+	url = git@github.com:jeffreytse/zsh-vi-mode.git
+[submodule "custom/themes/powerlevel10k"]
+	path = custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

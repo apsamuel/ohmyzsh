@@ -637,7 +637,7 @@ def main():
 
     # Cache YAML version
     DependencyStore.set(data)
-    
+
     dependencies = data["dependencies"]
     if len(sys.argv) > 1:
         # argv is list of dependencies to run, default is all of them

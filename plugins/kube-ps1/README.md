@@ -121,15 +121,15 @@ If neither binary is available, the prompt will print the following:
 (<symbol>|BINARY-N/A:N/A)
 ```
 
-Set the binary to `oc` with the following environment variable:
+Set the binary to `oc` with the following variable:
 
-```
+```sh
 KUBE_PS1_BINARY=oc
 ```
 
 If neither binary is available, the prompt will print the following:
 
-```
+```sh
 (<symbol>|BINARY-N/A:N/A)
 ```
 

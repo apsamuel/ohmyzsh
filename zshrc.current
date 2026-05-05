@@ -21,8 +21,6 @@
 # XDG Base Directory Specification
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest
 # https://wiki.archlinux.org/title/XDG_Base_Directory
-GITHUB_TOKEN=***REMOVED***
-export GITHUB_TOKEN
 XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"

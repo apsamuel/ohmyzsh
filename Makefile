@@ -52,7 +52,7 @@ define require_params
 endef
 
 # ── Phony declarations ────────────────────────────────────────────────────────
-.PHONY: help install add-plugin add-theme remove-plugin remove-theme sync-plugins sync-themes
+.PHONY: help install add-plugin add-theme remove-plugin remove-theme sync-plugins sync-themes doctor
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Help
@@ -335,3 +335,77 @@ sync-themes: ## Reconcile theme submodules from data file
 		fi; \
 	done
 	@echo "Done."
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Doctor — read-only health check
+# ══════════════════════════════════════════════════════════════════════════════
+
+doctor: ## Read-only health check (plugins, themes, submodules)
+	$(require_yq)
+	@$(RECIPE_ENV); \
+	fails=0; \
+	echo "── oh-my-zsh doctor ──"; \
+	echo ""; \
+	echo "── custom plugins ──"; \
+	count=$$(yq '.plugins.custom | length' "$(CONFIG)" 2>/dev/null || echo 0); \
+	for i in $$(seq 0 $$((count - 1))); do \
+		owner=$$(yq ".plugins.custom[$$i].owner" "$(CONFIG)"); \
+		repo=$$(yq ".plugins.custom[$$i].repo" "$(CONFIG)"); \
+		enabled=$$(yq ".plugins.custom[$$i].enabled" "$(CONFIG)"); \
+		if [[ "$$enabled" != "true" ]]; then \
+			printf '  ⏭  %-30s disabled\n' "$$owner/$$repo"; \
+			continue; \
+		fi; \
+		if ! git config -f .gitmodules --get "submodule.custom/plugins/$${repo}.url" >/dev/null 2>&1; then \
+			printf '  ✘  %-30s not registered in .gitmodules\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		if [ ! -d "custom/plugins/$${repo}" ]; then \
+			printf '  ✘  %-30s directory missing\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		if [ -z "$$(ls -A "custom/plugins/$${repo}" 2>/dev/null)" ]; then \
+			printf '  ✘  %-30s submodule not checked out (empty)\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		printf '  ✔  %-30s ok\n' "$$owner/$$repo"; \
+	done; \
+	echo ""; \
+	echo "── custom themes ──"; \
+	count=$$(yq '.themes.custom | length' "$(CONFIG)" 2>/dev/null || echo 0); \
+	for i in $$(seq 0 $$((count - 1))); do \
+		owner=$$(yq ".themes.custom[$$i].owner" "$(CONFIG)"); \
+		repo=$$(yq ".themes.custom[$$i].repo" "$(CONFIG)"); \
+		enabled=$$(yq ".themes.custom[$$i].enabled" "$(CONFIG)"); \
+		if [[ "$$enabled" != "true" ]]; then \
+			printf '  ⏭  %-30s disabled\n' "$$owner/$$repo"; \
+			continue; \
+		fi; \
+		if ! git config -f .gitmodules --get "submodule.custom/themes/$${repo}.url" >/dev/null 2>&1; then \
+			printf '  ✘  %-30s not registered in .gitmodules\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		if [ ! -d "custom/themes/$${repo}" ]; then \
+			printf '  ✘  %-30s directory missing\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		if [ -z "$$(ls -A "custom/themes/$${repo}" 2>/dev/null)" ]; then \
+			printf '  ✘  %-30s submodule not checked out (empty)\n' "$$owner/$$repo"; \
+			fails=$$((fails + 1)); \
+			continue; \
+		fi; \
+		printf '  ✔  %-30s ok\n' "$$owner/$$repo"; \
+	done; \
+	echo ""; \
+	if [ $$fails -gt 0 ]; then \
+		echo "✘ $$fails issue(s) found"; \
+		exit 1; \
+	else \
+		echo "✔ all custom plugins and themes healthy"; \
+	fi

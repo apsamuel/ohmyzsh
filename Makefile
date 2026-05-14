@@ -31,9 +31,12 @@ CONFIG ?= ../../data/zsh.yaml
 OWNER  ?=
 REPO   ?=
 EXEC   ?=
-DOT_DRY_RUN ?= 0
-DOT_DEBUG   ?= 0
-DOT_VERBOSE ?= 0
+DRY         ?= 0
+DEBUG       ?= 0
+VERBOSE     ?= 0
+DOT_DRY_RUN ?= $(DRY)
+DOT_DEBUG   ?= $(DEBUG)
+DOT_VERBOSE ?= $(VERBOSE)
 
 RECIPE_ENV := set -euo pipefail; \
 	if [[ "$(DOT_DEBUG)" == "1" ]]; then set -x; fi; \
@@ -266,6 +269,7 @@ sync-plugins: ## Reconcile plugin submodules from data file
 					echo "    [dry-run] post-init command skipped: (cd custom/plugins/$${repo} && $${exec_cmd})"; \
 				else \
 					echo "    Running post-init command: $${exec_cmd}"; \
+					# SECURITY: exec_cmd comes from repo-local data/zsh.yaml — do NOT use with untrusted input
 					(cd "custom/plugins/$${repo}" && eval "$$exec_cmd"); \
 				fi; \
 			fi; \
@@ -318,6 +322,7 @@ sync-themes: ## Reconcile theme submodules from data file
 					echo "    [dry-run] post-init command skipped: (cd custom/themes/$${repo} && $${exec_cmd})"; \
 				else \
 					echo "    Running post-init command: $${exec_cmd}"; \
+					# SECURITY: exec_cmd comes from repo-local data/zsh.yaml — do NOT use with untrusted input
 					(cd "custom/themes/$${repo}" && eval "$$exec_cmd"); \
 				fi; \
 			fi; \

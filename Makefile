@@ -24,6 +24,7 @@
 
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
+.ONESHELL:
 .DEFAULT_GOAL := help
 
 # ── Parameters ────────────────────────────────────────────────────────────────
@@ -55,7 +56,7 @@ define require_params
 endef
 
 # ── Phony declarations ────────────────────────────────────────────────────────
-.PHONY: help install add-plugin add-theme remove-plugin remove-theme sync-plugins sync-themes doctor
+.PHONY: help install add-plugin add-theme remove-plugin remove-theme sync-plugins sync-themes list-plugins doctor
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Help
@@ -341,6 +342,36 @@ sync-themes: ## Reconcile theme submodules from data file
 	done
 	@echo "Done."
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+# List plugins — read-only summary
+# ══════════════════════════════════════════════════════════════════════════════
+
+list-plugins: ## List custom plugins (name, status, enabled)
+	$(require_yq)
+	@$(RECIPE_ENV); \
+	echo "── custom plugins ──"; \
+	count=$$(yq '.plugins.custom | length' "$(CONFIG)" 2>/dev/null || echo 0); \
+	if [ "$$count" -eq 0 ]; then \
+		echo "  (none declared in $(CONFIG))"; \
+	else \
+		printf '  %-30s %-10s %s\n' "PLUGIN" "ENABLED" "STATUS"; \
+		printf '  %-30s %-10s %s\n' "------" "-------" "------"; \
+		for i in $$(seq 0 $$((count - 1))); do \
+			owner=$$(yq ".plugins.custom[$$i].owner" "$(CONFIG)"); \
+			repo=$$(yq ".plugins.custom[$$i].repo" "$(CONFIG)"); \
+			enabled=$$(yq ".plugins.custom[$$i].enabled" "$(CONFIG)"); \
+			name="$$owner/$$repo"; \
+			if [ -d "custom/plugins/$$repo" ] && [ -n "$$(ls -A "custom/plugins/$$repo" 2>/dev/null)" ]; then \
+				st="installed"; \
+			elif git config -f .gitmodules --get "submodule.custom/plugins/$${repo}.url" >/dev/null 2>&1; then \
+				st="registered (not checked out)"; \
+			else \
+				st="missing"; \
+			fi; \
+			printf '  %-30s %-10s %s\n' "$$name" "$$enabled" "$$st"; \
+		done; \
+	fi
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Doctor — read-only health check
